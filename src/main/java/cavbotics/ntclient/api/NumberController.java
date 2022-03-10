@@ -9,16 +9,16 @@ import org.springframework.web.bind.annotation.RestController;
 public class NumberController {
 
 	@GetMapping("/getnumber")
-	public Number getnumber(@RequestParam(value = "key", defaultValue = "") String key, @RequestParam(value = "value", defaultValue = "") Number num) {
+	public java.lang.Number getnumber(@RequestParam(value = "key", defaultValue = "") String key, @RequestParam(value = "value", defaultValue = "") java.lang.Number num) {
 		if (key.length() > 0) System.out.println("No key provided");
-		GetNumber updated = new GetNumber(key, num);
+		Number updated = new Number(key, num);
 		return updated.getNumber();
 	}
 
 	@PostMapping("/setnumber")
-	public boolean setnumber(@RequestParam(value = "key", defaultValue = "") String key, @RequestParam(value = "value", defaultValue = "") Number num) {
+	public boolean setnumber(@RequestParam(value = "key", defaultValue = "") String key, @RequestParam(value = "value", defaultValue = "") java.lang.Number num) {
 		if (key.length() > 0) System.out.println("No key provided");
-		SetNumber updated = new SetNumber(key, num);
+		Number updated = new Number(key, num);
 		return updated.updateNumber();
 	}
 }
