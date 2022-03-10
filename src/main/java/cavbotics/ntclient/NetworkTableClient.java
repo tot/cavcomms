@@ -11,16 +11,18 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 public class NetworkTableClient {
     public static void main(String[] args) {
         SpringApplication.run(NetworkTableClient.class, args);
+
+        // Connect to the robot after server is initialized
+        //connect();
     }
 
-    public void connect() {
+    public static void connect() {
         Constants.inst = NetworkTableInstance.getDefault();
-        NetworkTable table = Constants.inst.getTable("datatable");
-        NetworkTableEntry xEntry = table.getEntry("x");
-        NetworkTableEntry yEntry = table.getEntry("y");
+        Constants.table = Constants.inst.getTable("datatable");
+        NetworkTableEntry xEntry = Constants.table.getEntry("x");
+        NetworkTableEntry yEntry = Constants.table.getEntry("y");
         Constants.inst.startClientTeam(8590); // where TEAM=190, 294, etc, or use inst.startClient("hostname") or similar
         Constants.inst.startDSClient(); // recommended if running on DS computer; this gets the robot IP from the DS
-        System.out.println("hi");
         // while (true) {
         //     try {
         //         Thread.sleep(1000);
