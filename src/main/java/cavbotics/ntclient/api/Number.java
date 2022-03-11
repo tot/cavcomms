@@ -15,15 +15,26 @@ public class Number {
 
 	public Number(String key) {
 		this.key = key;
+		this.value = 0;
+	}
+
+	public java.lang.Number getValue() {
+		return this.value;
 	}
 
 	public java.lang.Number getNumber() {
 		NetworkTableEntry entry = Constants.table.getEntry(key);
-		return entry.getNumber(0);
+		return entry.getNumber(5.0);
 	}
 
 	public boolean updateNumber() {
 		NetworkTableEntry entry = Constants.table.getEntry(key);
 		return entry.setNumber(value);
+	}
+
+	public boolean removeNumber() {
+		NetworkTableEntry entry = Constants.table.getEntry(key);
+		entry.delete();
+		return true;
 	}
 }
