@@ -13,6 +13,10 @@ public class Number {
 		this.value = value;
 	}
 
+	public Number(String key) {
+		this.key = key;
+	}
+
 	public java.lang.Number getNumber() {
 		NetworkTableEntry entry = Constants.table.getEntry(key);
 		return entry.getNumber(0);

@@ -10,43 +10,29 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 @SpringBootApplication
 public class NetworkTableClient {
     private static int team;
+
     public static void main(String[] args) {
         team = Integer.parseInt(args[0]);
         SpringApplication.run(NetworkTableClient.class, args);
 
         // Connect to the robot after server is initialized
-        //connect(team);
+        connect(team);
     }
 
     public static void connect(int team) {
-        Constants.inst = NetworkTableInstance.getDefault();
-        Constants.table = Constants.inst.getTable("datatable");
-        NetworkTableEntry xEntry = Constants.table.getEntry("x");
-        NetworkTableEntry yEntry = Constants.table.getEntry("y");
-        Constants.inst.startClientTeam(team); // where TEAM=190, 294, etc, or use inst.startClient("hostname") or similar
-        // Constants.inst.startDSClient(); // recommended if running on DS computer; this gets the robot IP from the DS
-        // while (true) {
-        //     try {
-        //         Thread.sleep(1000);
-        //     } catch (InterruptedException ex) {
-        //         System.out.println("interrupted");
-        //         return;
-        //     }
-        //     double x = xEntry.getDouble(0.0);
-        //     double y = yEntry.getDouble(0.0);
-        //     System.out.println("X: " + x + " Y: " + y);
-        // }
-    }
+        NetworkTableInstance inst = NetworkTableInstance.getDefault();
+        NetworkTable table = inst.getTable("datatable");         
+        NetworkTableEntry testentry = table.getEntry("test");
+        das.setString("false");
+        NetworkTableEntry xEntry = table.getEntry("x");
+        NetworkTableEntry yEntry = table.getEntry("y");
+        inst.startClientTeam(8590); // where TEAM=190, 294, etc, or use inst.startClient("hostname") or similar
+        inst.startDSClient(); // recommended if running on DS computer; this gets the robot IP from the DS
 
-    public String updateString(String key, String value) {
-        return "";
-    }
+        // NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
 
-    public String updateBoolean(String key, boolean value) {
-        return "";
-    }
-
-    public String updateNumber(String key, double value) {
-        return "";
+        // To add an entry
+        NetworkTableEntry testentry = table.getEntry("test");
+        System.out.println(table.getEntry("das").getString(""));
     }
 }
