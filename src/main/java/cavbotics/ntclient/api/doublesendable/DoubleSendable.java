@@ -44,7 +44,7 @@ public class DoubleSendable {
 	/**
 	 * Get the key
 	 * 
-	 * @return Current Number object's key
+	 * @return Current key as String
 	 */
 	public String getKey() {
 		return this.key;

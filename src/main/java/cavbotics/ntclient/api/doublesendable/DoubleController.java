@@ -2,8 +2,6 @@ package cavbotics.ntclient.api.doublesendable;
 
 import java.util.Objects;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-
 import javax.validation.Valid;
 
 import org.springframework.http.HttpStatus;
