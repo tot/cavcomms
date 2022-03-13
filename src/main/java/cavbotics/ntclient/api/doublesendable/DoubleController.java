@@ -29,7 +29,7 @@ public class DoubleController {
 
 	/**
 	 * Returns the double the key maps to. If the key does not exist or is of
-	 * different type, it will return the default value (0).
+	 * different type, it will return -1.
 	 * 
 	 * @param key The key to look up
 	 * @return The value associated with the given key or the given default value if
