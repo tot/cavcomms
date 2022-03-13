@@ -22,7 +22,7 @@ import cavbotics.ntclient.api.ResponseHandler;
  * This file handles the String routes
  */
 @RestController
-@RequestMapping("/String")
+@RequestMapping("/string")
 public class StringController {
     /**
      * Returns the String the key maps to. If the key does not exist or is of
