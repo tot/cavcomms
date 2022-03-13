@@ -12,17 +12,20 @@ public class NetworkTableClient {
 
     public static void main(String[] args) {
         // Handles team number argument
-        if (args.length == 0) team = 8590;
-        else team = Integer.parseInt(args[0]);
+        if (args.length == 0)
+            team = 8590;
+        else
+            team = Integer.parseInt(args[0]);
 
         SpringApplication.run(NetworkTableClient.class, args);
 
         // Connect to the robot after server is initialized
-        //connect(team);
+        // connect(team);
     }
 
     /**
      * Connect to the robot's Network Table server
+     * 
      * @param team Team number
      */
     public static void connect(int team) {

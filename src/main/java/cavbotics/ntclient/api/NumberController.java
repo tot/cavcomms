@@ -16,13 +16,16 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class NumberController {
 	@Autowired
-    private ObjectMapper objectMapper;
+	private ObjectMapper objectMapper;
 
 	/**
-	 * Returns the number the key maps to. If the key does not exist or is of different type, it will return the default value (0).
+	 * Returns the number the key maps to. If the key does not exist or is of
+	 * different type, it will return the default value (0).
 	 * Equivalent of edu.wpi.first.wpilibj.smartdashboard.SmartDashboard.getNumber
+	 * 
 	 * @param key The key to look up
-	 * @return The value associated with the given key or the given default value if there is no value associated with the key
+	 * @return The value associated with the given key or the given default value if
+	 *         there is no value associated with the key
 	 * @throws JsonProcessingException Exception for formatting and returning JSON
 	 */
 	@GetMapping("/getnumber")
@@ -35,12 +38,15 @@ public class NumberController {
 	/**
 	 * Updates a number in the table. Adds a new number if the key does not exist.
 	 * Equivalent of edu.wpi.first.wpilibj.smartdashboard.SmartDashboard.putNumber
+	 * 
 	 * @param key The key to be assigned to
 	 * @param num The value that will be assigned
-	 * @return False if the table key already exists with a different type. Otherwise True.
+	 * @return False if the table key already exists with a different type.
+	 *         Otherwise True.
 	 */
 	@PostMapping("/setnumber")
-	public boolean setnumber(@RequestParam(value = "key", defaultValue = "") String key, @RequestParam(value = "value", defaultValue = "") java.lang.Number num) {
+	public boolean setnumber(@RequestParam(value = "key", defaultValue = "") String key,
+			@RequestParam(value = "value", defaultValue = "") java.lang.Number num) {
 		Number updated = new Number(key, num);
 		return updated.updateNumber();
 	}
@@ -48,6 +54,7 @@ public class NumberController {
 	/**
 	 * Deletes the specified key in this table. The key can not be null.
 	 * Equivalent of edu.wpi.first.wpilibj.smartdashboard.SmartDashboard.delete
+	 * 
 	 * @param key The key to delete
 	 * @return True if successful. False otherwise.
 	 */

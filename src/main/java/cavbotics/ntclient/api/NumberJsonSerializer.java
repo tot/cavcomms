@@ -11,18 +11,19 @@ import org.springframework.boot.jackson.JsonComponent;
 
 @JsonComponent
 public class NumberJsonSerializer extends JsonSerializer<Number> {
-    @Override
-    public void serialize(Number num, JsonGenerator jsonGenerator, 
-      SerializerProvider serializerProvider) throws IOException, 
+  @Override
+  public void serialize(Number num, JsonGenerator jsonGenerator,
+      SerializerProvider serializerProvider) throws IOException,
       JsonProcessingException {
- 
-        jsonGenerator.writeStartObject();
-        jsonGenerator.writeStringField(
-          "number", 
-          getNumberString(num.getValue()));
-        jsonGenerator.writeEndObject();
-    }
-    private static String getNumberString(java.lang.Number num) {
-        return num.toString();
-    }
+
+    jsonGenerator.writeStartObject();
+    jsonGenerator.writeStringField(
+        "number",
+        getNumberString(num.getValue()));
+    jsonGenerator.writeEndObject();
+  }
+
+  private static String getNumberString(java.lang.Number num) {
+    return num.toString();
+  }
 }

@@ -13,15 +13,18 @@ public class Number {
 
 	/**
 	 * 2-arg constructor for Number object
-	 * @param key The key to store in the network table
+	 * 
+	 * @param key   The key to store in the network table
 	 * @param value The value for the given key
 	 */
 	public Number(String key, java.lang.Number value) {
 		this.key = key;
 		this.value = value;
 	}
+
 	/**
 	 * 1-arg constructor for Number object
+	 * 
 	 * @param key
 	 */
 	public Number(String key) {
@@ -31,6 +34,7 @@ public class Number {
 
 	/**
 	 * Get the value of the current Number object
+	 * 
 	 * @return Current Number object's value
 	 */
 	public java.lang.Number getValue() {
@@ -39,6 +43,7 @@ public class Number {
 
 	/**
 	 * Get the value in the Network Table using the current Number object's key
+	 * 
 	 * @return Value in the Network Table
 	 */
 	public java.lang.Number getNumber() {
@@ -47,7 +52,9 @@ public class Number {
 	}
 
 	/**
-	 * Update the number value in the Network Table using the current Number object's key
+	 * Update the number value in the Network Table using the current Number
+	 * object's key
+	 * 
 	 * @return True if successfully updated and false if unsuccessful
 	 */
 	public boolean updateNumber() {
@@ -57,6 +64,7 @@ public class Number {
 
 	/**
 	 * Deletes an entry from the Network Table using the current Number object's key
+	 * 
 	 * @return True if successfully deleted and false if unsuccessful
 	 */
 	public boolean removeNumber() {
