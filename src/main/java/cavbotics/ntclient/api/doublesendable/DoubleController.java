@@ -34,11 +34,10 @@ public class DoubleController {
 	 * @param key The key to look up
 	 * @return The value associated with the given key or the given default value if
 	 *         there is no value associated with the key
-	 * @throws JsonProcessingException Exception for formatting and returning JSON
 	 */
 	@GetMapping(value = "/get", produces = "application/json")
 	public ResponseEntity<Object> getDoubleController(
-			@RequestParam(value = "key", defaultValue = "") String key) throws JsonProcessingException {
+			@RequestParam(value = "key", defaultValue = "") String key) {
 		if (Objects.isNull(key) || key.length() == 0) {
 			return ResponseHandler.generateResponse("Missing key", HttpStatus.BAD_REQUEST, null);
 		}
