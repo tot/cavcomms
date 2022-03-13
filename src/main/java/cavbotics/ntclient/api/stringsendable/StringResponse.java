@@ -1,4 +1,4 @@
-package cavbotics.ntclient.api.Stringsendable;
+package cavbotics.ntclient.api.stringsendable;
 
 /**
  * Response object for /String routes
