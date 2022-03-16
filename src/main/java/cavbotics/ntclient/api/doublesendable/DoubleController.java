@@ -1,5 +1,7 @@
 package cavbotics.ntclient.api.doublesendable;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import javax.validation.Valid;
@@ -16,7 +18,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import cavbotics.ntclient.Constants;
 import cavbotics.ntclient.api.ResponseHandler;
+import edu.wpi.first.networktables.NetworkTableEntry;
 
 /**
  * This file handles the Double routes
@@ -36,8 +40,14 @@ public class DoubleController {
 	@GetMapping(value = "/get", produces = "application/json")
 	public ResponseEntity<Object> getDoubleController(
 			@RequestParam(value = "key", defaultValue = "") String key) {
-		if (Objects.isNull(key) || key.length() == 0) {
-			return ResponseHandler.generateResponse("Missing key", HttpStatus.BAD_REQUEST, null);
+		if (key == "") {
+			NetworkTableEntry[] entries = Constants.inst.getEntries("/datatable", 2);
+			for (NetworkTableEntry entry : entries) {
+				List<DoubleSendable> list = new ArrayList<DoubleSendable>();
+				list.add(new DoubleSendable(entry.getName().substring(9), entry.getDouble(0)));
+				
+			}
+			return ResponseHandler.generateResponse("check console all doubles", HttpStatus.BAD_REQUEST, null);
 		}
 		DoubleSendable find = new DoubleSendable(key);
 		DoubleResponse res = new DoubleResponse(find.getValue());
@@ -58,9 +68,8 @@ public class DoubleController {
 			MediaType.APPLICATION_JSON_VALUE })
 	@ResponseBody
 	public ResponseEntity<Object> setDoubleController(@Valid @RequestBody DoubleSendable num) {
-		DoubleSendable set = new DoubleSendable(num.getKey(), num.getValue());
-		boolean status = set.setDouble();
-		DoubleResponse res = new DoubleResponse("set", status);
+		boolean status = num.setDouble();
+		DoubleResponse res = new DoubleResponse("set", num.getValue(), status);
 		if (!status)
 			return ResponseHandler.generateResponse("Unable to set", HttpStatus.CONFLICT, res);
 		return ResponseHandler.generateResponse("Successfully set", HttpStatus.OK, res);
@@ -75,14 +84,24 @@ public class DoubleController {
 	@DeleteMapping(value = "/delete")
 	public ResponseEntity<Object> deleteDoubleController(
 			@RequestParam(value = "key", defaultValue = "") String key) {
-		if (Objects.isNull(key) || key.length() == 0) {
+		if (key == "") {
 			return ResponseHandler.generateResponse("Missing key", HttpStatus.BAD_REQUEST, null);
 		}
 		DoubleSendable updated = new DoubleSendable(key);
 		boolean status = updated.removeDouble();
-		DoubleResponse res = new DoubleResponse(status);
+		DoubleResponse res = new DoubleResponse(updated.getValue(), status);
 		if (!status)
 			return ResponseHandler.generateResponse("Unable to delete", HttpStatus.NOT_FOUND, res);
 		return ResponseHandler.generateResponse("Deleted", HttpStatus.OK, res);
+	}
+
+	@GetMapping(value = "/getdoubles")
+	public ResponseEntity<Object> getDoubleEntriesController() {
+		NetworkTableEntry[] entries = Constants.inst.getEntries("/datatable", 0);
+		for (NetworkTableEntry entry : entries) {
+			System.out.println(entry.getName() + ": " + entry.getValue());
+		}
+		// System.out.println(Constants.inst.getEntries("/datatable", 0));
+		return ResponseHandler.generateResponse("check console", HttpStatus.OK, null);
 	}
 }

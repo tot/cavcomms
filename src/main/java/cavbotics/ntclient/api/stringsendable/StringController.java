@@ -1,9 +1,5 @@
 package cavbotics.ntclient.api.stringsendable;
 
-import java.util.Objects;
-
-import javax.validation.Valid;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -35,7 +31,7 @@ public class StringController {
     @GetMapping(value = "/get", produces = "application/json")
     public ResponseEntity<Object> getStringController(
             @RequestParam(value = "key", defaultValue = "") String key) {
-        if (Objects.isNull(key) || key.length() == 0) {
+        if (key == "") {
             return ResponseHandler.generateResponse("Missing key", HttpStatus.BAD_REQUEST, null);
         }
         StringSendable find = new StringSendable(key);
@@ -56,9 +52,8 @@ public class StringController {
     @PostMapping(value = "/set", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
             MediaType.APPLICATION_JSON_VALUE })
     @ResponseBody
-    public ResponseEntity<Object> setStringController(@Valid @RequestBody StringSendable num) {
-        StringSendable set = new StringSendable(num.getKey(), num.getValue());
-        boolean status = set.setString();
+    public ResponseEntity<Object> setStringController(@RequestBody StringSendable str) {
+        boolean status = str.setString();
         StringResponse res = new StringResponse("set", status);
         if (!status)
             return ResponseHandler.generateResponse("Unable to set", HttpStatus.CONFLICT, res);
@@ -74,12 +69,12 @@ public class StringController {
     @DeleteMapping(value = "/delete")
     public ResponseEntity<Object> deleteStringController(
             @RequestParam(value = "key", defaultValue = "") String key) {
-        if (Objects.isNull(key) || key.length() == 0) {
+        if (key == "") {
             return ResponseHandler.generateResponse("Missing key", HttpStatus.BAD_REQUEST, null);
         }
         StringSendable updated = new StringSendable(key);
         boolean status = updated.removeString();
-        StringResponse res = new StringResponse(status);
+        StringResponse res = new StringResponse(updated.getValue(), status);
         if (!status)
             return ResponseHandler.generateResponse("Unable to delete", HttpStatus.NOT_FOUND, res);
         return ResponseHandler.generateResponse("Deleted", HttpStatus.OK, res);

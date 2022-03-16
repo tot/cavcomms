@@ -1,8 +1,5 @@
 package cavbotics.ntclient.api.stringsendable;
 
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-
 import cavbotics.ntclient.Constants;
 import edu.wpi.first.networktables.NetworkTableEntry;
 
@@ -11,12 +8,7 @@ import edu.wpi.first.networktables.NetworkTableEntry;
  * /string routes
  */
 public class StringSendable {
-    @NotNull(message = "a key is required")
-    @NotEmpty(message = "a key is required")
     private String key;
-
-    @NotEmpty(message = "a value is required")
-    @NotNull(message = "a value is required")
     private String value;
 
     /**

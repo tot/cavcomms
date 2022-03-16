@@ -10,7 +10,7 @@ public class IntResponse {
     private boolean status;
 
     /**
-     * A IntResponse object with a decimal
+     * A IntResponse object with a decimal. Used in /get endpoint.
      * 
      * @param value Value as an int to send in response
      */
@@ -20,34 +20,25 @@ public class IntResponse {
     }
 
     /**
-     * A IntResponse object with a boolean
+     * A IntResponse object with a boolean. Used in /delete endpoint.
      * 
      * @param status Status as a boolean to send in response
      */
-    public IntResponse(boolean status) {
+    public IntResponse(int value, boolean status) {
         this.title = "status";
+        this.value = value;
         this.status = status;
     }
 
     /**
-     * A IntResponse object with a title and message
-     * 
-     * @param title   Title of the response
-     * @param message Message to send in response
-     */
-    public IntResponse(String title, String message) {
-        this.title = title;
-        this.message = message;
-    }
-
-    /**
-     * A IntResponse object with a title and status
+     * A IntResponse object with a title and status. Used in /set.
      * 
      * @param title  Title of the response
      * @param status Status to send in response
      */
-    public IntResponse(String title, boolean status) {
+    public IntResponse(String title, int value, boolean status) {
         this.title = title;
+        this.value = value;
         this.status = status;
     }
 

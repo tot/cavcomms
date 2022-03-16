@@ -20,7 +20,7 @@ public class NetworkTableClient {
         SpringApplication.run(NetworkTableClient.class, args);
 
         // Connect to the robot after server is initialized
-        // connect(team);
+        connect(team);
     }
 
     /**
@@ -30,8 +30,10 @@ public class NetworkTableClient {
      */
     public static void connect(int team) {
         Constants.inst = NetworkTableInstance.getDefault();
-        Constants.table = Constants.inst.getTable("datatable");
-        Constants.inst.startClientTeam(team);
-        Constants.inst.startDSClient(); // recommended if running on DS computer; this gets the robot IP from the DS
+        Constants.inst.startClient("127.0.0.1");
+        Constants.table = Constants.inst.getTable("/datatable");
+        System.out.println(Constants.table.getKeys());
+        // Constants.inst.startClient("127.0.0.1");
+        //Constants.inst.startDSClient(); // recommended if running on DS computer; this gets the robot IP from the DS
     }
 }

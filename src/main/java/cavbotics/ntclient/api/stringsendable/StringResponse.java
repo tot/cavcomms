@@ -10,7 +10,7 @@ public class StringResponse {
     private boolean status;
 
     /**
-     * A StringResponse object with a decimal
+     * A StringResponse object with a decimal. Used in /get endpoint.
      * 
      * @param value Value as a String to send in response
      */
@@ -20,34 +20,25 @@ public class StringResponse {
     }
 
     /**
-     * A StringResponse object with a boolean
+     * A StringResponse object with a boolean. Used in /delete endpoint.
      * 
      * @param status Status as a boolean to send in response
      */
-    public StringResponse(boolean status) {
+    public StringResponse(String value, boolean status) {
         this.title = "status";
+        this.value = value;
         this.status = status;
     }
 
     /**
-     * A StringResponse object with a title and message
-     * 
-     * @param title   Title of the response
-     * @param message Message to send in response
-     */
-    public StringResponse(String title, String message) {
-        this.title = title;
-        this.message = message;
-    }
-
-    /**
-     * A StringResponse object with a title and status
+     * A StringResponse object with a title and status. Used in /set endpoint.
      * 
      * @param title  Title of the response
      * @param status Status to send in response
      */
-    public StringResponse(String title, boolean status) {
+    public StringResponse(String title, String value, boolean status) {
         this.title = title;
+        this.value = value;
         this.status = status;
     }
 

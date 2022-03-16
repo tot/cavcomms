@@ -6,11 +6,11 @@ package cavbotics.ntclient.api.doublesendable;
 public class DoubleResponse {
     private String title;
     private String message;
-    private double value;
+    private Double value;
     private boolean status;
 
     /**
-     * A DoubleResponse object with a decimal
+     * A DoubleResponse object with a decimal, Used in /get endpoint.
      * 
      * @param value Value as a double to send in response
      */
@@ -20,34 +20,25 @@ public class DoubleResponse {
     }
 
     /**
-     * A DoubleResponse object with a boolean
+     * A DoubleResponse object with a boolean. Used in /delete endpoint.
      * 
      * @param status Status as a boolean to send in response
      */
-    public DoubleResponse(boolean status) {
+    public DoubleResponse(double value, boolean status) {
         this.title = "status";
+        this.value = value;
         this.status = status;
     }
 
     /**
-     * A DoubleResponse object with a title and message
-     * 
-     * @param title   Title of the response
-     * @param message Message to send in response
-     */
-    public DoubleResponse(String title, String message) {
-        this.title = title;
-        this.message = message;
-    }
-
-    /**
-     * A DoubleResponse object with a title and status
+     * A DoubleResponse object with a title and status Used in /set endpoint.
      * 
      * @param title  Title of the response
      * @param status Status to send in response
      */
-    public DoubleResponse(String title, boolean status) {
+    public DoubleResponse(String title, double value, boolean status) {
         this.title = title;
+        this.value = value;
         this.status = status;
     }
 

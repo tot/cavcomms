@@ -1,62 +1,25 @@
 package cavbotics.ntclient.api.doublesendable;
 
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
+import cavbotics.ntclient.api.SendableObject;
 
 import cavbotics.ntclient.Constants;
-
+import cavbotics.ntclient.api.SendableObject;
 import edu.wpi.first.networktables.NetworkTableEntry;
 
 /**
  * Object containing the key and value as a double to be used in
  * /double routes
  */
-public class DoubleSendable {
-	@NotNull(message = "a key is required")
-	@NotEmpty(message = "a key is required")
-	private String key;
-
-	@NotEmpty(message = "a value is required")
-	@NotNull(message = "a value is required")
-	private double value;
-
-	/**
-	 * A DoubleSendable object with a key and value
-	 * 
-	 * @param key   The key to store in the network table
-	 * @param value The value for the given key
-	 */
-	public DoubleSendable(String key, double value) {
-		this.key = key;
-		this.value = value;
-	}
-
+public class DoubleSendable<T> extends SendableObject {
 	/**
 	 * A DoubleSendable object with a key. Value is set to 0.0 by default.
 	 * 
 	 * @param key
 	 */
 	public DoubleSendable(String key) {
+		super();
 		this.key = key;
 		this.value = 0.0;
-	}
-
-	/**
-	 * Get the key
-	 * 
-	 * @return Current key as String
-	 */
-	public String getKey() {
-		return this.key;
-	}
-
-	/**
-	 * Get the value
-	 * 
-	 * @return Current value as double
-	 */
-	public double getValue() {
-		return this.value;
 	}
 
 	/**
@@ -64,7 +27,10 @@ public class DoubleSendable {
 	 * 
 	 * @return Value as a double in the Network Table
 	 */
-	public double getDouble() {
+	// public T get() {
+	// 	return (T) getDouble();
+	// }
+	private double getDouble() {
 		NetworkTableEntry entry = Constants.table.getEntry(key);
 		return entry.getDouble(-1);
 	}
