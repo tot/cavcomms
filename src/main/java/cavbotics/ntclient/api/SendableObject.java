@@ -2,7 +2,7 @@ package cavbotics.ntclient.api;
 
 public abstract class SendableObject<T> {
     protected String key;
-	protected T value;
+	protected Object value;
 
     public SendableObject() {
         super();
@@ -14,7 +14,7 @@ public abstract class SendableObject<T> {
 	 * @param key   The key to store in the network table
 	 * @param value The value for the given key
 	 */
-	public SendableObject(String key, T value) {
+	public SendableObject(String key, Object value) {
 		this.key = key;
 		this.value = value;
 	}
@@ -33,12 +33,7 @@ public abstract class SendableObject<T> {
 	 * 
 	 * @return Current value as double
 	 */
-	public T getValue() {
+	public Object getValue() {
 		return this.value;
 	}
-
-    public abstract T get();
-    public abstract T set();
-    public abstract T remove();
-    
 }

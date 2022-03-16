@@ -2,14 +2,10 @@ package cavbotics.ntclient.api.doublesendable;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
-
-import javax.validation.Valid;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -42,16 +38,16 @@ public class DoubleController {
 			@RequestParam(value = "key", defaultValue = "") String key) {
 		if (key == "") {
 			NetworkTableEntry[] entries = Constants.inst.getEntries("/datatable", 2);
+			List<DoubleSendable<Object>> list = new ArrayList<DoubleSendable<Object>>();
 			for (NetworkTableEntry entry : entries) {
-				List<DoubleSendable> list = new ArrayList<DoubleSendable>();
-				list.add(new DoubleSendable(entry.getName().substring(9), entry.getDouble(0)));
-				
+				list.add(new DoubleSendable<Object>(entry.getName().substring(9), entry.getDouble(0)));
 			}
-			return ResponseHandler.generateResponse("check console all doubles", HttpStatus.BAD_REQUEST, null);
+			DoubleResponse res = new DoubleResponse(list);
+			return ResponseHandler.generateResponse("check console all doubles", HttpStatus.BAD_REQUEST, list);
 		}
-		DoubleSendable find = new DoubleSendable(key);
-		DoubleResponse res = new DoubleResponse(find.getValue());
-		if (find.getValue() == -1)
+		DoubleSendable<Object> find = new DoubleSendable<Object>(key, 0.0);
+		DoubleResponse res = new DoubleResponse(find.getDouble());
+		if ((int) find.getDouble() == -1)
 			return ResponseHandler.generateResponse("Unable to find", HttpStatus.NOT_FOUND, res);
 		return ResponseHandler.generateResponse("Successfully searched", HttpStatus.OK, res);
 	}
@@ -67,32 +63,12 @@ public class DoubleController {
 	@PostMapping(value = "/set", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
 			MediaType.APPLICATION_JSON_VALUE })
 	@ResponseBody
-	public ResponseEntity<Object> setDoubleController(@Valid @RequestBody DoubleSendable num) {
+	public ResponseEntity<Object> setDoubleController(@RequestBody DoubleSendable<Object> num) {
 		boolean status = num.setDouble();
-		DoubleResponse res = new DoubleResponse("set", num.getValue(), status);
+		DoubleResponse res = new DoubleResponse("set", (double) num.getValue(), status);
 		if (!status)
 			return ResponseHandler.generateResponse("Unable to set", HttpStatus.CONFLICT, res);
 		return ResponseHandler.generateResponse("Successfully set", HttpStatus.OK, res);
-	}
-
-	/**
-	 * Deletes the specified key in this table. The key can not be null.
-	 * 
-	 * @param key The key to delete
-	 * @return True if successful. False otherwise.
-	 */
-	@DeleteMapping(value = "/delete")
-	public ResponseEntity<Object> deleteDoubleController(
-			@RequestParam(value = "key", defaultValue = "") String key) {
-		if (key == "") {
-			return ResponseHandler.generateResponse("Missing key", HttpStatus.BAD_REQUEST, null);
-		}
-		DoubleSendable updated = new DoubleSendable(key);
-		boolean status = updated.removeDouble();
-		DoubleResponse res = new DoubleResponse(updated.getValue(), status);
-		if (!status)
-			return ResponseHandler.generateResponse("Unable to delete", HttpStatus.NOT_FOUND, res);
-		return ResponseHandler.generateResponse("Deleted", HttpStatus.OK, res);
 	}
 
 	@GetMapping(value = "/getdoubles")

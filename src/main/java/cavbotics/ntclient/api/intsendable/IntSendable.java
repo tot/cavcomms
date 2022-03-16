@@ -1,17 +1,14 @@
 package cavbotics.ntclient.api.intsendable;
 
 import cavbotics.ntclient.Constants;
-
+import cavbotics.ntclient.api.SendableObject;
 import edu.wpi.first.networktables.NetworkTableEntry;
 
 /**
  * Object containing the key and value as a int to be used in
  * /int routes
  */
-public class IntSendable {
-    private String key;
-    private int value;
-
+public class IntSendable<T> extends SendableObject<T> {
     /**
      * A IntSendable object with a key and value
      * 
@@ -19,6 +16,7 @@ public class IntSendable {
      * @param value The value for the given key
      */
     public IntSendable(String key, int value) {
+        super();
         this.key = key;
         this.value = value;
     }
@@ -29,26 +27,9 @@ public class IntSendable {
      * @param key
      */
     public IntSendable(String key) {
+        super();
         this.key = key;
         this.value = 0;
-    }
-
-    /**
-     * Get the key
-     * 
-     * @return Current key as String
-     */
-    public String getKey() {
-        return this.key;
-    }
-
-    /**
-     * Get the value
-     * 
-     * @return Current value as int
-     */
-    public int getValue() {
-        return this.value;
     }
 
     /**
@@ -68,7 +49,7 @@ public class IntSendable {
      */
     public boolean setInt() {
         NetworkTableEntry entry = Constants.table.getEntry(this.key);
-        return entry.setNumber(value);
+        return entry.setNumber((int) value);
     }
 
     /**

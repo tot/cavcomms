@@ -1,16 +1,14 @@
 package cavbotics.ntclient.api.stringsendable;
 
 import cavbotics.ntclient.Constants;
+import cavbotics.ntclient.api.SendableObject;
 import edu.wpi.first.networktables.NetworkTableEntry;
 
 /**
  * Object containing the key and value as a String to be used in
  * /string routes
  */
-public class StringSendable {
-    private String key;
-    private String value;
-
+public class StringSendable<T> extends SendableObject<T> {
     /**
      * A StringSendable object with a key and value
      * 
@@ -18,6 +16,7 @@ public class StringSendable {
      * @param value The value for the given key
      */
     public StringSendable(String key, String value) {
+        super();
         this.key = key;
         this.value = value;
     }
@@ -28,26 +27,9 @@ public class StringSendable {
      * @param key
      */
     public StringSendable(String key) {
+        super();
         this.key = key;
         this.value = "";
-    }
-
-    /**
-     * Get the key
-     * 
-     * @return Current key as String
-     */
-    public String getKey() {
-        return this.key;
-    }
-
-    /**
-     * Get the value
-     * 
-     * @return Current value as String
-     */
-    public String getValue() {
-        return this.value;
     }
 
     /**
@@ -67,19 +49,6 @@ public class StringSendable {
      */
     public boolean setString() {
         NetworkTableEntry entry = Constants.table.getEntry(this.key);
-        return entry.setString(value);
-    }
-
-    /**
-     * Deletes an entry from the Network Table using this key
-     * 
-     * @return True if successfully deleted and false if unsuccessful
-     */
-    public boolean removeString() {
-        NetworkTableEntry entry = Constants.table.getEntry(key);
-        entry.delete();
-        // TODO: Add way to check if it was successful/unsuccesful
-        // and update the return value accordingly
-        return true;
+        return entry.setString((String) value);
     }
 }

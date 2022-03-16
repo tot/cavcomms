@@ -3,7 +3,6 @@ package cavbotics.ntclient.api.stringsendable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -34,8 +33,8 @@ public class StringController {
         if (key == "") {
             return ResponseHandler.generateResponse("Missing key", HttpStatus.BAD_REQUEST, null);
         }
-        StringSendable find = new StringSendable(key);
-        StringResponse res = new StringResponse(find.getValue());
+        StringSendable<Object> find = new StringSendable<Object>(key);
+        StringResponse res = new StringResponse((String) find.getValue());
         if (find.getValue().equals("none"))
             return ResponseHandler.generateResponse("Unable to find", HttpStatus.NOT_FOUND, res);
         return ResponseHandler.generateResponse("Successfully searched", HttpStatus.OK, res);
@@ -52,31 +51,11 @@ public class StringController {
     @PostMapping(value = "/set", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
             MediaType.APPLICATION_JSON_VALUE })
     @ResponseBody
-    public ResponseEntity<Object> setStringController(@RequestBody StringSendable str) {
+    public ResponseEntity<Object> setStringController(@RequestBody StringSendable<Object> str) {
         boolean status = str.setString();
-        StringResponse res = new StringResponse("set", status);
+        StringResponse res = new StringResponse("set", (String) str.getValue(), status);
         if (!status)
             return ResponseHandler.generateResponse("Unable to set", HttpStatus.CONFLICT, res);
         return ResponseHandler.generateResponse("Successfully set", HttpStatus.OK, res);
-    }
-
-    /**
-     * Deletes the specified key in this table. The key can not be null.
-     * 
-     * @param key The key to delete
-     * @return True if successful. False otherwise.
-     */
-    @DeleteMapping(value = "/delete")
-    public ResponseEntity<Object> deleteStringController(
-            @RequestParam(value = "key", defaultValue = "") String key) {
-        if (key == "") {
-            return ResponseHandler.generateResponse("Missing key", HttpStatus.BAD_REQUEST, null);
-        }
-        StringSendable updated = new StringSendable(key);
-        boolean status = updated.removeString();
-        StringResponse res = new StringResponse(updated.getValue(), status);
-        if (!status)
-            return ResponseHandler.generateResponse("Unable to delete", HttpStatus.NOT_FOUND, res);
-        return ResponseHandler.generateResponse("Deleted", HttpStatus.OK, res);
     }
 }

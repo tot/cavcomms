@@ -1,33 +1,18 @@
 package cavbotics.ntclient.api.stringsendable;
 
+import cavbotics.ntclient.api.ResponseSendable;
+
 /**
  * Response object for /String routes
  */
-public class StringResponse {
-    private String title;
-    private String message;
-    private String value;
-    private boolean status;
-
+public class StringResponse extends ResponseSendable {
     /**
      * A StringResponse object with a decimal. Used in /get endpoint.
      * 
      * @param value Value as a String to send in response
      */
     public StringResponse(String value) {
-        this.title = "string";
-        this.value = value;
-    }
-
-    /**
-     * A StringResponse object with a boolean. Used in /delete endpoint.
-     * 
-     * @param status Status as a boolean to send in response
-     */
-    public StringResponse(String value, boolean status) {
-        this.title = "status";
-        this.value = value;
-        this.status = status;
+        super("string", value);
     }
 
     /**
@@ -37,44 +22,6 @@ public class StringResponse {
      * @param status Status to send in response
      */
     public StringResponse(String title, String value, boolean status) {
-        this.title = title;
-        this.value = value;
-        this.status = status;
-    }
-
-    /**
-     * Return the title
-     * 
-     * @return Title as a String
-     */
-    public String getTitle() {
-        return title;
-    }
-
-    /**
-     * Return the message
-     * 
-     * @return Message as a string
-     */
-    public String message() {
-        return message;
-    }
-
-    /**
-     * Return the status
-     * 
-     * @return Status as a boolean
-     */
-    public boolean getStatus() {
-        return status;
-    }
-
-    /**
-     * Return the value
-     * 
-     * @return Value as a String
-     */
-    public String getValue() {
-        return value;
+        super(title, value, status);
     }
 }

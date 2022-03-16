@@ -1,35 +1,31 @@
 package cavbotics.ntclient.api.doublesendable;
 
+import java.util.List;
+
+import cavbotics.ntclient.api.ResponseSendable;
+
 /**
  * Response object for /double routes
  */
-public class DoubleResponse {
-    private String title;
-    private String message;
-    private Double value;
-    private boolean status;
-
+public class DoubleResponse extends ResponseSendable {
     /**
      * A DoubleResponse object with a decimal, Used in /get endpoint.
      * 
      * @param value Value as a double to send in response
      */
     public DoubleResponse(double value) {
-        this.title = "double";
-        this.value = value;
+        super("double", value);
     }
 
     /**
-     * A DoubleResponse object with a boolean. Used in /delete endpoint.
+     * A DoubleResponse object with a decimal, Used in /get endpoint.
      * 
-     * @param status Status as a boolean to send in response
+     * @param value Value as a double to send in response
      */
-    public DoubleResponse(double value, boolean status) {
-        this.title = "status";
-        this.value = value;
-        this.status = status;
+    public DoubleResponse(List<DoubleSendable<Object>> value) {
+        super("double array", value);
     }
-
+    
     /**
      * A DoubleResponse object with a title and status Used in /set endpoint.
      * 
@@ -37,44 +33,6 @@ public class DoubleResponse {
      * @param status Status to send in response
      */
     public DoubleResponse(String title, double value, boolean status) {
-        this.title = title;
-        this.value = value;
-        this.status = status;
-    }
-
-    /**
-     * Return the title
-     * 
-     * @return Title as a String
-     */
-    public String getTitle() {
-        return title;
-    }
-
-    /**
-     * Return the message
-     * 
-     * @return Message as a string
-     */
-    public String message() {
-        return message;
-    }
-
-    /**
-     * Return the status
-     * 
-     * @return Status as a boolean
-     */
-    public boolean getStatus() {
-        return status;
-    }
-
-    /**
-     * Return the value
-     * 
-     * @return Value as a double
-     */
-    public double getValue() {
-        return value;
+        super(title, value, status);
     }
 }
