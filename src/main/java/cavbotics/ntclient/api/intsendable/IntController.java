@@ -1,4 +1,4 @@
-package cavbotics.ntclient.api.doublesendable;
+package cavbotics.ntclient.api.intsendable;
 
 import java.util.Objects;
 
@@ -19,14 +19,14 @@ import org.springframework.web.bind.annotation.RestController;
 import cavbotics.ntclient.api.ResponseHandler;
 
 /**
- * This file handles the Double routes
+ * This file handles the Int routes
  */
 @RestController
-@RequestMapping("/double")
-public class DoubleController {
+@RequestMapping("/int")
+public class IntController {
 
 	/**
-	 * Returns the double the key maps to. If the key does not exist or is of
+	 * Returns the int the key maps to. If the key does not exist or is of
 	 * different type, it will return -1.
 	 * 
 	 * @param key The key to look up
@@ -34,20 +34,20 @@ public class DoubleController {
 	 *         there is no value associated with the key
 	 */
 	@GetMapping(value = "/get", produces = "application/json")
-	public ResponseEntity<Object> getDoubleController(
+	public ResponseEntity<Object> getIntController(
 			@RequestParam(value = "key", defaultValue = "") String key) {
 		if (Objects.isNull(key) || key.length() == 0) {
 			return ResponseHandler.generateResponse("Missing key", HttpStatus.BAD_REQUEST, null);
 		}
-		DoubleSendable find = new DoubleSendable(key);
-		DoubleResponse res = new DoubleResponse(find.getValue());
+		IntSendable find = new IntSendable(key);
+		IntResponse res = new IntResponse(find.getValue());
 		if (find.getValue() == -1)
 			return ResponseHandler.generateResponse("Unable to find", HttpStatus.NOT_FOUND, res);
 		return ResponseHandler.generateResponse("Successfully searched", HttpStatus.OK, res);
 	}
 
 	/**
-	 * Updates a double in the table. Adds a new double if the key does not exist.
+	 * Updates a int in the table. Adds a new int if the key does not exist.
 	 * 
 	 * @param key The key to be assigned to
 	 * @param num The value that will be assigned
@@ -57,10 +57,10 @@ public class DoubleController {
 	@PostMapping(value = "/set", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
 			MediaType.APPLICATION_JSON_VALUE })
 	@ResponseBody
-	public ResponseEntity<Object> setDoubleController(@Valid @RequestBody DoubleSendable num) {
-		DoubleSendable set = new DoubleSendable(num.getKey(), num.getValue());
-		boolean status = set.setDouble();
-		DoubleResponse res = new DoubleResponse("set", status);
+	public ResponseEntity<Object> setIntController(@Valid @RequestBody IntSendable num) {
+		IntSendable set = new IntSendable(num.getKey(), num.getValue());
+		boolean status = set.setInt();
+		IntResponse res = new IntResponse("set", status);
 		if (!status)
 			return ResponseHandler.generateResponse("Unable to set", HttpStatus.CONFLICT, res);
 		return ResponseHandler.generateResponse("Successfully set", HttpStatus.OK, res);
@@ -73,14 +73,14 @@ public class DoubleController {
 	 * @return True if successful. False otherwise.
 	 */
 	@DeleteMapping(value = "/delete")
-	public ResponseEntity<Object> deleteDoubleController(
+	public ResponseEntity<Object> deleteIntController(
 			@RequestParam(value = "key", defaultValue = "") String key) {
 		if (Objects.isNull(key) || key.length() == 0) {
 			return ResponseHandler.generateResponse("Missing key", HttpStatus.BAD_REQUEST, null);
 		}
-		DoubleSendable updated = new DoubleSendable(key);
-		boolean status = updated.removeDouble();
-		DoubleResponse res = new DoubleResponse(status);
+		IntSendable updated = new IntSendable(key);
+		boolean status = updated.removeInt();
+		IntResponse res = new IntResponse(status);
 		if (!status)
 			return ResponseHandler.generateResponse("Unable to delete", HttpStatus.NOT_FOUND, res);
 		return ResponseHandler.generateResponse("Deleted", HttpStatus.OK, res);
