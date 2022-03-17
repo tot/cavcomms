@@ -1,7 +1,5 @@
 package cavbotics.ntclient.api;
 
-import java.util.List;
-
 public class ResponseSendable<T> {
     protected String title;
     protected String message;
