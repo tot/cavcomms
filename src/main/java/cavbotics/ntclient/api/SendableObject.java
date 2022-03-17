@@ -41,7 +41,7 @@ public abstract class SendableObject<T> {
 	 * 
 	 * @return Current value as double
 	 */
-	public Object getValue() {
+	public T getValue() {
 		return this.value;
 	}
 

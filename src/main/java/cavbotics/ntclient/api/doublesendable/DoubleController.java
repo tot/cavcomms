@@ -66,9 +66,9 @@ public class DoubleController {
 			MediaType.APPLICATION_JSON_VALUE })
 	@ResponseBody
 	public ResponseEntity<Object> setDoubleController(@RequestBody DoubleSendable num) {
-		DoubleSendable set = new DoubleSendable((String) num.getKey(), (double) num.getValue());
+		DoubleSendable set = new DoubleSendable((String) num.getKey(), num.getValue());
 		boolean status = num.setDouble();
-		DoubleResponse res = new DoubleResponse("set", (double) num.getValue(), status);
+		DoubleResponse res = new DoubleResponse("set", num.getValue(), status);
 		if (!status)
 			return ResponseHandler.generateResponse("Unable to set", HttpStatus.CONFLICT, res);
 		return ResponseHandler.generateResponse("Successfully set", HttpStatus.OK, res);
