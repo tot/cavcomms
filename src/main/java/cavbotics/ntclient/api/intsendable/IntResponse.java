@@ -7,7 +7,7 @@ import cavbotics.ntclient.api.ResponseSendable;
 /**
  * Response object for /int routes
  */
-public class IntResponse extends ResponseSendable<Integer> {
+public class IntResponse extends ResponseSendable<Object> {
 
     /**
      * A IntResponse object with a decimal. Used in /get endpoint.

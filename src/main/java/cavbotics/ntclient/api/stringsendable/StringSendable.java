@@ -23,6 +23,10 @@ public class StringSendable extends SendableObject<String> {
         super(key, value);
     }
 
+    public StringSendable(String key, String value, String type) {
+		super(key, value, type);
+	}
+
     /**
      * A StringSendable object with a key. Value is set to "" by default.
      * 

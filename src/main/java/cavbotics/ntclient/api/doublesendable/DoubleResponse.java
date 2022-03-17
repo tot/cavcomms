@@ -7,7 +7,7 @@ import cavbotics.ntclient.api.ResponseSendable;
 /**
  * Response object for /double routes
  */
-public class DoubleResponse extends ResponseSendable<Double> {
+public class DoubleResponse extends ResponseSendable<Object> {
     /**
      * A DoubleResponse object with a decimal, Used in /get endpoint.
      * 
@@ -23,7 +23,7 @@ public class DoubleResponse extends ResponseSendable<Double> {
      * @param value Value as a double to send in response
      */
     public DoubleResponse(List<DoubleSendable> value) {
-        super("double array", value);
+        super("list of doubles", value);
     }
 
     /**

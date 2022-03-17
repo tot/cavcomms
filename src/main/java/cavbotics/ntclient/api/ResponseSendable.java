@@ -19,11 +19,6 @@ public class ResponseSendable<T> {
         this.value = value;
     }
 
-    public ResponseSendable(String type, List value) {
-        this.title = type;
-        this.test = value;
-    }
-
     /**
      * A ResponseSendable object with a boolean. Used in /delete endpoint.
      * 

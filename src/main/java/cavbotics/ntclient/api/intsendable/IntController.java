@@ -40,17 +40,17 @@ public class IntController {
 			NetworkTableEntry[] entries = Constants.inst.getEntries("/datatable", 2);
 			List<IntSendable> list = new ArrayList<IntSendable>();
 			for (NetworkTableEntry entry : entries) {
-				list.add(new IntSendable(entry.getName().substring(11), (int) entry.getNumber(0)));
+				list.add(new IntSendable(entry.getName().substring(11), (int) entry.getNumber(0), "int"));
 			}
-			IntResponse res = new IntResponse(list);
-			return ResponseHandler.generateResponse("Searched all integers in table", HttpStatus.OK, list);
+			return ResponseHandler.generateResponse("Searched all doubles in table", HttpStatus.OK, list);
+		} else {
+			IntSendable find = new IntSendable(key, 0);
+			IntResponse res = new IntResponse(find.getInt());
+			if ((int) find.getInt() == -1) {
+				return ResponseHandler.generateResponse("Unable to find", HttpStatus.NOT_FOUND, res);
+			}
+			return ResponseHandler.generateResponse("Successfully searched", HttpStatus.OK, res);
 		}
-		IntSendable find = new IntSendable(key, 0);
-		IntSendable res = new IntSendable(find.getInt());
-		if ((int) find.getInt() == -1) {
-			return ResponseHandler.generateResponse("Unable to find", HttpStatus.NOT_FOUND, res);
-		}
-		return ResponseHandler.generateResponse("Successfully searched", HttpStatus.OK, res);
 	}
 
 	/**

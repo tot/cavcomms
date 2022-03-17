@@ -27,6 +27,10 @@ public class IntSendable extends SendableObject<Integer> {
         super(key, value);
     }
 
+    public IntSendable(String key, int value, String type) {
+		super(key, value, type);
+	}
+
     /**
      * A IntSendable object with a key. Value is set to 0 by default.
      * 
