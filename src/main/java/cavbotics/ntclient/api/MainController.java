@@ -28,7 +28,7 @@ public class MainController {
 		}
 		NetworkTableEntry entry = Constants.table.getEntry(key);
 		entry.delete();
-		ResponseSendable res = new ResponseSendable(key, true);
+		ResponseSendable<Boolean> res = new ResponseSendable<Boolean>(key, true);
 		return ResponseHandler.generateResponse("Deleted", HttpStatus.OK, res);
 	}
 }
