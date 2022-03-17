@@ -1,12 +1,13 @@
 package cavbotics.ntclient.api;
 
 public abstract class SendableObject<T> {
-    protected String key;
-	protected Object value;
+	protected String key;
+	protected T value;
+	protected String type;
 
-    public SendableObject() {
-        super();
-    }
+	public SendableObject() {
+		super();
+	}
 
 	/**
 	 * A DoubleSendable object with a key and value
@@ -14,9 +15,16 @@ public abstract class SendableObject<T> {
 	 * @param key   The key to store in the network table
 	 * @param value The value for the given key
 	 */
-	public SendableObject(String key, Object value) {
+	public SendableObject(String key, T value) {
 		this.key = key;
 		this.value = value;
+		this.type = "";
+	}
+
+	public SendableObject(String key, T value, String type) {
+		this.key = key;
+		this.value = value;
+		this.type = type;
 	}
 
 	/**
@@ -35,5 +43,14 @@ public abstract class SendableObject<T> {
 	 */
 	public Object getValue() {
 		return this.value;
+	}
+
+	/**
+	 * Get the type
+	 * 
+	 * @return Current type as String
+	 */
+	public Object getType() {
+		return this.type;
 	}
 }

@@ -1,23 +1,27 @@
 package cavbotics.ntclient.api;
 
-public class ResponseSendable {
+import java.util.List;
+
+public class ResponseSendable<T> {
     protected String title;
     protected String message;
-    protected Object value;
+    protected T value;
+    protected Object test;
     protected boolean status;
 
-    public ResponseSendable() {
-        super();
-    }
-    
     /**
-     * A ResponseSendable object with a decimal, Used in /get endpoint.
+     * A ResponseSendable object with a generic type, Used in /get endpoint.
      * 
      * @param value Value as a double to send in response
      */
-    public ResponseSendable(String type, Object value) {
+    public ResponseSendable(String type, T value) {
         this.title = type;
         this.value = value;
+    }
+
+    public ResponseSendable(String type, List value) {
+        this.title = type;
+        this.test = value;
     }
 
     /**
@@ -25,7 +29,7 @@ public class ResponseSendable {
      * 
      * @param status Status as a boolean to send in response
      */
-    public ResponseSendable(double value, boolean status) {
+    public ResponseSendable(T value, boolean status) {
         this.title = "status";
         this.value = value;
         this.status = status;
@@ -37,7 +41,7 @@ public class ResponseSendable {
      * @param title  Title of the response
      * @param status Status to send in response
      */
-    public ResponseSendable(String title, Object value, boolean status) {
+    public ResponseSendable(String title, T value, boolean status) {
         this.title = title;
         this.value = value;
         this.status = status;
