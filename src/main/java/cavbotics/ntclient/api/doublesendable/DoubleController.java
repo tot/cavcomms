@@ -27,7 +27,8 @@ public class DoubleController {
 
 	/**
 	 * Returns the double the key maps to. If the key does not exist or is of
-	 * different type, it will return -1.
+	 * different type, it will return -1. If there is no key, then return a list of
+	 * all the double keys.
 	 * 
 	 * @param key The key to look up
 	 * @return The value associated with the given key or the given default value if
@@ -36,20 +37,21 @@ public class DoubleController {
 	@GetMapping(value = "/get", produces = "application/json")
 	public ResponseEntity<Object> getDoubleController(
 			@RequestParam(value = "key", defaultValue = "") String key) {
-		if (key == "") {
+		if (key == "" || key.length() == 0) {
 			NetworkTableEntry[] entries = Constants.inst.getEntries("/datatable", 2);
-			List<DoubleSendable<Object>> list = new ArrayList<DoubleSendable<Object>>();
+			List<DoubleSendable> list = new ArrayList<DoubleSendable>();
 			for (NetworkTableEntry entry : entries) {
-				list.add(new DoubleSendable<Object>(entry.getName().substring(9), entry.getDouble(0)));
+				list.add(new DoubleSendable(entry.getName().substring(11), entry.getDouble(0), "double"));
 			}
-			DoubleResponse res = new DoubleResponse(list);
-			return ResponseHandler.generateResponse("check console all doubles", HttpStatus.BAD_REQUEST, list);
+			return ResponseHandler.generateResponse("Searched all doubles in table", HttpStatus.OK, list);
+		} else {
+			DoubleSendable find = new DoubleSendable(key, 0.0);
+			DoubleResponse res = new DoubleResponse(find.getDouble());
+			if ((int) find.getDouble() == -1) {
+				return ResponseHandler.generateResponse("Unable to find", HttpStatus.NOT_FOUND, res);
+			}
+			return ResponseHandler.generateResponse("Successfully searched", HttpStatus.OK, res);
 		}
-		DoubleSendable<Object> find = new DoubleSendable<Object>(key, 0.0);
-		DoubleResponse res = new DoubleResponse(find.getDouble());
-		if ((int) find.getDouble() == -1)
-			return ResponseHandler.generateResponse("Unable to find", HttpStatus.NOT_FOUND, res);
-		return ResponseHandler.generateResponse("Successfully searched", HttpStatus.OK, res);
 	}
 
 	/**
@@ -63,21 +65,12 @@ public class DoubleController {
 	@PostMapping(value = "/set", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
 			MediaType.APPLICATION_JSON_VALUE })
 	@ResponseBody
-	public ResponseEntity<Object> setDoubleController(@RequestBody DoubleSendable<Object> num) {
+	public ResponseEntity<Object> setDoubleController(@RequestBody DoubleSendable num) {
+		DoubleSendable set = new DoubleSendable((String) num.getKey(), (double) num.getValue());
 		boolean status = num.setDouble();
 		DoubleResponse res = new DoubleResponse("set", (double) num.getValue(), status);
 		if (!status)
 			return ResponseHandler.generateResponse("Unable to set", HttpStatus.CONFLICT, res);
 		return ResponseHandler.generateResponse("Successfully set", HttpStatus.OK, res);
-	}
-
-	@GetMapping(value = "/getdoubles")
-	public ResponseEntity<Object> getDoubleEntriesController() {
-		NetworkTableEntry[] entries = Constants.inst.getEntries("/datatable", 0);
-		for (NetworkTableEntry entry : entries) {
-			System.out.println(entry.getName() + ": " + entry.getValue());
-		}
-		// System.out.println(Constants.inst.getEntries("/datatable", 0));
-		return ResponseHandler.generateResponse("check console", HttpStatus.OK, null);
 	}
 }

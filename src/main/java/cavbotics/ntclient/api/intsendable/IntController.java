@@ -1,5 +1,8 @@
 package cavbotics.ntclient.api.intsendable;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -11,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import cavbotics.ntclient.Constants;
 import cavbotics.ntclient.api.ResponseHandler;
+import edu.wpi.first.networktables.NetworkTableEntry;
 
 /**
  * This file handles the Int routes
@@ -31,13 +36,20 @@ public class IntController {
 	@GetMapping(value = "/get", produces = "application/json")
 	public ResponseEntity<Object> getIntController(
 			@RequestParam(value = "key", defaultValue = "") String key) {
-		if (key == "") {
-			return ResponseHandler.generateResponse("Missing key", HttpStatus.BAD_REQUEST, null);
+		if (key == "" || key.length() == 0) {
+			NetworkTableEntry[] entries = Constants.inst.getEntries("/datatable", 2);
+			List<IntSendable> list = new ArrayList<IntSendable>();
+			for (NetworkTableEntry entry : entries) {
+				list.add(new IntSendable(entry.getName().substring(11), (int) entry.getNumber(0)));
+			}
+			IntResponse res = new IntResponse(list);
+			return ResponseHandler.generateResponse("Searched all integers in table", HttpStatus.OK, list);
 		}
-		IntSendable<Object> find = new IntSendable<Object>(key);
-		IntResponse res = new IntResponse((int) find.getValue());
-		if ((int) find.getValue() == -1)
+		IntSendable find = new IntSendable(key, 0);
+		IntSendable res = new IntSendable(find.getInt());
+		if ((int) find.getInt() == -1) {
 			return ResponseHandler.generateResponse("Unable to find", HttpStatus.NOT_FOUND, res);
+		}
 		return ResponseHandler.generateResponse("Successfully searched", HttpStatus.OK, res);
 	}
 
@@ -52,7 +64,7 @@ public class IntController {
 	@PostMapping(value = "/set", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
 			MediaType.APPLICATION_JSON_VALUE })
 	@ResponseBody
-	public ResponseEntity<Object> setIntController(@RequestBody IntSendable<Object> num) {
+	public ResponseEntity<Object> setIntController(@RequestBody IntSendable num) {
 		boolean status = num.setInt();
 		IntResponse res = new IntResponse("set", (int) num.getValue(), status);
 		if (!status)

@@ -1,5 +1,8 @@
 package cavbotics.ntclient.api.stringsendable;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -11,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import cavbotics.ntclient.Constants;
 import cavbotics.ntclient.api.ResponseHandler;
+import edu.wpi.first.networktables.NetworkTableEntry;
 
 /**
  * This file handles the String routes
@@ -28,15 +33,22 @@ public class StringController {
      *         there is no value associated with the key
      */
     @GetMapping(value = "/get", produces = "application/json")
-    public ResponseEntity<Object> getStringController(
+    public ResponseEntity<Object> getIntController(
             @RequestParam(value = "key", defaultValue = "") String key) {
-        if (key == "") {
-            return ResponseHandler.generateResponse("Missing key", HttpStatus.BAD_REQUEST, null);
+        if (key == "" || key.length() == 0) {
+            NetworkTableEntry[] entries = Constants.inst.getEntries("/datatable", 2);
+            List<StringSendable> list = new ArrayList<StringSendable>();
+            for (NetworkTableEntry entry : entries) {
+                list.add(new StringSendable(entry.getName().substring(11), (String) entry.getString("")));
+            }
+            StringResponse res = new StringResponse(list);
+            return ResponseHandler.generateResponse("Searched all integers in table", HttpStatus.BAD_REQUEST, list);
         }
-        StringSendable<Object> find = new StringSendable<Object>(key);
-        StringResponse res = new StringResponse((String) find.getValue());
-        if (find.getValue().equals("none"))
+        StringSendable find = new StringSendable(key, "");
+        StringSendable res = new StringSendable(find.getString());
+        if ((String) find.getString() == "") {
             return ResponseHandler.generateResponse("Unable to find", HttpStatus.NOT_FOUND, res);
+        }
         return ResponseHandler.generateResponse("Successfully searched", HttpStatus.OK, res);
     }
 
@@ -51,7 +63,7 @@ public class StringController {
     @PostMapping(value = "/set", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
             MediaType.APPLICATION_JSON_VALUE })
     @ResponseBody
-    public ResponseEntity<Object> setStringController(@RequestBody StringSendable<Object> str) {
+    public ResponseEntity<Object> setStringController(@RequestBody StringSendable str) {
         boolean status = str.setString();
         StringResponse res = new StringResponse("set", (String) str.getValue(), status);
         if (!status)

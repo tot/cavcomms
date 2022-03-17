@@ -1,5 +1,8 @@
 package cavbotics.ntclient.api.intsendable;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import cavbotics.ntclient.Constants;
 import cavbotics.ntclient.api.SendableObject;
 import edu.wpi.first.networktables.NetworkTableEntry;
@@ -8,17 +11,20 @@ import edu.wpi.first.networktables.NetworkTableEntry;
  * Object containing the key and value as a int to be used in
  * /int routes
  */
-public class IntSendable<T> extends SendableObject<T> {
+public class IntSendable extends SendableObject<Integer> {
+    public IntSendable(int value) {
+        super("int", value);
+    }
+
     /**
      * A IntSendable object with a key and value
      * 
      * @param key   The key to store in the network table
      * @param value The value for the given key
      */
-    public IntSendable(String key, int value) {
-        super();
-        this.key = key;
-        this.value = value;
+    @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+    public IntSendable(@JsonProperty("key") String key, @JsonProperty("value") int value) {
+        super(key, value);
     }
 
     /**
@@ -27,9 +33,7 @@ public class IntSendable<T> extends SendableObject<T> {
      * @param key
      */
     public IntSendable(String key) {
-        super();
-        this.key = key;
-        this.value = 0;
+        super(key, 0);
     }
 
     /**
@@ -50,18 +54,5 @@ public class IntSendable<T> extends SendableObject<T> {
     public boolean setInt() {
         NetworkTableEntry entry = Constants.table.getEntry(this.key);
         return entry.setNumber((int) value);
-    }
-
-    /**
-     * Deletes an entry from the Network Table using this key
-     * 
-     * @return True if successfully deleted and false if unsuccessful
-     */
-    public boolean removeInt() {
-        NetworkTableEntry entry = Constants.table.getEntry(key);
-        entry.delete();
-        // TODO: Add way to check if it was successful/unsuccesful
-        // and update the return value accordingly
-        return true;
     }
 }

@@ -1,11 +1,13 @@
 package cavbotics.ntclient.api.stringsendable;
 
+import java.util.List;
+
 import cavbotics.ntclient.api.ResponseSendable;
 
 /**
  * Response object for /String routes
  */
-public class StringResponse extends ResponseSendable {
+public class StringResponse extends ResponseSendable<String> {
     /**
      * A StringResponse object with a decimal. Used in /get endpoint.
      * 
@@ -13,6 +15,15 @@ public class StringResponse extends ResponseSendable {
      */
     public StringResponse(String value) {
         super("string", value);
+    }
+
+    /**
+     * A DoubleResponse object with a decimal, Used in /get endpoint.
+     * 
+     * @param value Value as a double to send in response
+     */
+    public StringResponse(List<StringSendable> value) {
+        super("list of strings", value);
     }
 
     /**
