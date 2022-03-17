@@ -54,7 +54,7 @@ public class IntController {
 	}
 
 	/**
-	 * Updates a int in the table. Adds a new int if the key does not exist.
+	 * Updates an int in the table. Adds a new int if the key does not exist.
 	 * 
 	 * @param key The key to be assigned to
 	 * @param num The value that will be assigned

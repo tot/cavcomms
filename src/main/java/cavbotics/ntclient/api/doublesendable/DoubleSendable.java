@@ -13,7 +13,6 @@ import edu.wpi.first.networktables.NetworkTableEntry;
  * /double routes
  */
 public class DoubleSendable extends SendableObject<Double> {
-	
 	public DoubleSendable(double value) {
 		super("double", value);
 	}
@@ -43,7 +42,7 @@ public class DoubleSendable extends SendableObject<Double> {
 	 * @return True if successful and false if unsuccessful
 	 */
 	public boolean setDouble() {
-		NetworkTableEntry entry = Constants.table.getEntry(this.key);
-		return entry.setNumber((double) value);
+		NetworkTableEntry entry = Constants.table.getEntry(key);
+		return entry.setNumber(value);
 	}
 }

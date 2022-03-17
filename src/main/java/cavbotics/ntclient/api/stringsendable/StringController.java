@@ -36,10 +36,10 @@ public class StringController {
     public ResponseEntity<Object> getIntController(
             @RequestParam(value = "key", defaultValue = "") String key) {
         if (key == "" || key.length() == 0) {
-            NetworkTableEntry[] entries = Constants.inst.getEntries("/datatable", 2);
+            NetworkTableEntry[] entries = Constants.inst.getEntries("/datatable", 4);
             List<StringSendable> list = new ArrayList<StringSendable>();
             for (NetworkTableEntry entry : entries) {
-                list.add(new StringSendable(entry.getName().substring(11), entry.getString(""), "string"));
+                list.add(new StringSendable(entry.getName().substring(11), entry.getString(""), "dsa"));
             }
             return ResponseHandler.generateResponse("Searched all doubles in table", HttpStatus.OK, list);
         } else {
@@ -65,7 +65,7 @@ public class StringController {
     @ResponseBody
     public ResponseEntity<Object> setStringController(@RequestBody StringSendable str) {
         boolean status = str.setString();
-        StringResponse res = new StringResponse("set", (String) str.getValue(), status);
+        StringResponse res = new StringResponse("set", str.getValue(), status);
         if (!status)
             return ResponseHandler.generateResponse("Unable to set", HttpStatus.CONFLICT, res);
         return ResponseHandler.generateResponse("Successfully set", HttpStatus.OK, res);

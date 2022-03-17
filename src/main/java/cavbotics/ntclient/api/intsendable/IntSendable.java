@@ -56,7 +56,7 @@ public class IntSendable extends SendableObject<Integer> {
      * @return True if successful and false if unsuccessful
      */
     public boolean setInt() {
-        NetworkTableEntry entry = Constants.table.getEntry(this.key);
-        return entry.setNumber((int) value);
+        NetworkTableEntry entry = Constants.table.getEntry(key);
+        return entry.setNumber(value);
     }
 }

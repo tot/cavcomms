@@ -27,14 +27,14 @@ public class StringSendable extends SendableObject<String> {
 		super(key, value, type);
 	}
 
-    /**
-     * A StringSendable object with a key. Value is set to "" by default.
-     * 
-     * @param key
-     */
-    public StringSendable(String key) {
-        super(key, "");
-    }
+    // /**
+    //  * A StringSendable object with a key. Value is set to "" by default.
+    //  * 
+    //  * @param key
+    //  */
+    // public StringSendable(String key) {
+    //     super(key, "");
+    // }
 
     /**
      * Get the value in the Network Table using this key
@@ -52,7 +52,7 @@ public class StringSendable extends SendableObject<String> {
      * @return True if successful and false if unsuccessful
      */
     public boolean setString() {
-        NetworkTableEntry entry = Constants.table.getEntry(this.key);
-        return entry.setString((String) value);
+        NetworkTableEntry entry = Constants.table.getEntry(key);
+        return entry.setString(value);
     }
 }
