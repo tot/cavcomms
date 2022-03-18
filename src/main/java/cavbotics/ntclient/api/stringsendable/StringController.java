@@ -39,7 +39,7 @@ public class StringController {
             NetworkTableEntry[] entries = Constants.inst.getEntries("/datatable", 4);
             List<StringSendable> list = new ArrayList<StringSendable>();
             for (NetworkTableEntry entry : entries) {
-                list.add(new StringSendable(entry.getName().substring(11), entry.getString(""), "dsa"));
+                list.add(new StringSendable(entry.getName().substring(11), entry.getString("")));
             }
             return ResponseHandler.generateResponse("Searched all doubles in table", HttpStatus.OK, list);
         } else {

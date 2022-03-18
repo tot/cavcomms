@@ -40,7 +40,7 @@ public class IntController {
 			NetworkTableEntry[] entries = Constants.inst.getEntries("/datatable", 2);
 			List<IntSendable> list = new ArrayList<IntSendable>();
 			for (NetworkTableEntry entry : entries) {
-				list.add(new IntSendable(entry.getName().substring(11), (int) entry.getNumber(0), "int"));
+				list.add(new IntSendable(entry.getName().substring(11), (int) entry.getNumber(0)));
 			}
 			return ResponseHandler.generateResponse("Searched all doubles in table", HttpStatus.OK, list);
 		} else {

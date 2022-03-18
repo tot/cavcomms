@@ -41,7 +41,7 @@ public class DoubleController {
 			NetworkTableEntry[] entries = Constants.inst.getEntries("/datatable", 2);
 			List<DoubleSendable> list = new ArrayList<DoubleSendable>();
 			for (NetworkTableEntry entry : entries) {
-				list.add(new DoubleSendable(entry.getName().substring(11), entry.getDouble(0), "double"));
+				list.add(new DoubleSendable(entry.getName().substring(11), entry.getDouble(0)));
 			}
 			return ResponseHandler.generateResponse("Searched all doubles in table", HttpStatus.OK, list);
 		} else {
