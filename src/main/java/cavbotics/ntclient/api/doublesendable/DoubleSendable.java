@@ -3,6 +3,7 @@ package cavbotics.ntclient.api.doublesendable;
 import cavbotics.ntclient.api.SendableObject;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import cavbotics.ntclient.Constants;
@@ -31,6 +32,7 @@ public class DoubleSendable extends SendableObject<Double> {
 	 * 
 	 * @return Value as a double in the Network Table
 	 */
+	@JsonIgnore
 	public double getDouble() {
 		NetworkTableEntry entry = Constants.table.getEntry(key);
 		return entry.getDouble(-1);

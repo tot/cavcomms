@@ -1,6 +1,7 @@
 package cavbotics.ntclient.api.stringsendable;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import cavbotics.ntclient.Constants;
@@ -41,6 +42,7 @@ public class StringSendable extends SendableObject<String> {
      * 
      * @return Value as a String in the Network Table
      */
+    @JsonIgnore
     public String getString() {
         NetworkTableEntry entry = Constants.table.getEntry(key);
         return entry.getString("none");
