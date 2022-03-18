@@ -13,9 +13,6 @@ import edu.wpi.first.networktables.NetworkTableEntry;
  * /int routes
  */
 public class IntSendable extends SendableObject<Integer> {
-    public IntSendable(int value) {
-        super("int", value);
-    }
 
     /**
      * A IntSendable object with a key and value
@@ -25,21 +22,17 @@ public class IntSendable extends SendableObject<Integer> {
      */
     @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
     public IntSendable(@JsonProperty("key") String key, @JsonProperty("value") int value) {
-        super(key, value);
+        super(key, value, "int");
     }
 
-    public IntSendable(String key, int value, String type) {
-		super(key, value, type);
-	}
+
+
 
     /**
      * A IntSendable object with a key. Value is set to 0 by default.
      * 
      * @param key
      */
-    public IntSendable(String key) {
-        super(key, 0);
-    }
 
     /**
      * Get the value in the Network Table using this key

@@ -21,12 +21,9 @@ public class StringSendable extends SendableObject<String> {
      */
     @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
     public StringSendable(@JsonProperty("key") String key, @JsonProperty("value") String value) {
-        super(key, value);
+        super(key, value, "string");
     }
 
-    public StringSendable(String key, String value, String type) {
-		super(key, value, type);
-	}
 
     // /**
     //  * A StringSendable object with a key. Value is set to "" by default.

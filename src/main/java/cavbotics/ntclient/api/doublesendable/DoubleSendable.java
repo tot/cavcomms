@@ -14,18 +14,14 @@ import edu.wpi.first.networktables.NetworkTableEntry;
  * /double routes
  */
 public class DoubleSendable extends SendableObject<Double> {
-	public DoubleSendable(double value) {
-		super("double", value);
-	}
 
 	@JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
 	public DoubleSendable(@JsonProperty("key") String key, @JsonProperty("value") double value) {
-		super(key, value);
+		super(key, value, "double");
 	}
 
-	public DoubleSendable(String key, double value, String type) {
-		super(key, value, type);
-	}
+
+
 
 	/**
 	 * Get the value in the Network Table using this key
