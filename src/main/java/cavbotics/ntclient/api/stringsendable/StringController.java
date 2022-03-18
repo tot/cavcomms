@@ -1,13 +1,11 @@
 package cavbotics.ntclient.api.stringsendable;
 
-import java.util.Objects;
-
-import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import cavbotics.ntclient.Constants;
 import cavbotics.ntclient.api.ResponseHandler;
+import edu.wpi.first.networktables.NetworkTableEntry;
 
 /**
  * This file handles the String routes
@@ -33,16 +33,23 @@ public class StringController {
      *         there is no value associated with the key
      */
     @GetMapping(value = "/get", produces = "application/json")
-    public ResponseEntity<Object> getStringController(
+    public ResponseEntity<Object> getIntController(
             @RequestParam(value = "key", defaultValue = "") String key) {
-        if (Objects.isNull(key) || key.length() == 0) {
-            return ResponseHandler.generateResponse("Missing key", HttpStatus.BAD_REQUEST, null);
+        if (key == "" || key.length() == 0) {
+            NetworkTableEntry[] entries = Constants.inst.getEntries("/datatable", 4);
+            List<StringSendable> list = new ArrayList<StringSendable>();
+            for (NetworkTableEntry entry : entries) {
+                list.add(new StringSendable(entry.getName().substring(11), entry.getString("")));
+            }
+            return ResponseHandler.generateResponse("Searched all doubles in table", HttpStatus.OK, list);
+        } else {
+            StringSendable find = new StringSendable(key, "");
+            StringResponse res = new StringResponse(find.getString());
+            if (find.getString().equals("none")) {
+                return ResponseHandler.generateResponse("Unable to find", HttpStatus.NOT_FOUND, res);
+            }
+            return ResponseHandler.generateResponse("Successfully searched", HttpStatus.OK, res);
         }
-        StringSendable find = new StringSendable(key);
-        StringResponse res = new StringResponse(find.getValue());
-        if (find.getValue().equals("none"))
-            return ResponseHandler.generateResponse("Unable to find", HttpStatus.NOT_FOUND, res);
-        return ResponseHandler.generateResponse("Successfully searched", HttpStatus.OK, res);
     }
 
     /**
@@ -56,32 +63,11 @@ public class StringController {
     @PostMapping(value = "/set", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
             MediaType.APPLICATION_JSON_VALUE })
     @ResponseBody
-    public ResponseEntity<Object> setStringController(@Valid @RequestBody StringSendable num) {
-        StringSendable set = new StringSendable(num.getKey(), num.getValue());
-        boolean status = set.setString();
-        StringResponse res = new StringResponse("set", status);
+    public ResponseEntity<Object> setStringController(@RequestBody StringSendable str) {
+        boolean status = str.setString();
+        StringResponse res = new StringResponse("set", str.getValue(), status);
         if (!status)
             return ResponseHandler.generateResponse("Unable to set", HttpStatus.CONFLICT, res);
         return ResponseHandler.generateResponse("Successfully set", HttpStatus.OK, res);
-    }
-
-    /**
-     * Deletes the specified key in this table. The key can not be null.
-     * 
-     * @param key The key to delete
-     * @return True if successful. False otherwise.
-     */
-    @DeleteMapping(value = "/delete")
-    public ResponseEntity<Object> deleteStringController(
-            @RequestParam(value = "key", defaultValue = "") String key) {
-        if (Objects.isNull(key) || key.length() == 0) {
-            return ResponseHandler.generateResponse("Missing key", HttpStatus.BAD_REQUEST, null);
-        }
-        StringSendable updated = new StringSendable(key);
-        boolean status = updated.removeString();
-        StringResponse res = new StringResponse(status);
-        if (!status)
-            return ResponseHandler.generateResponse("Unable to delete", HttpStatus.NOT_FOUND, res);
-        return ResponseHandler.generateResponse("Deleted", HttpStatus.OK, res);
     }
 }

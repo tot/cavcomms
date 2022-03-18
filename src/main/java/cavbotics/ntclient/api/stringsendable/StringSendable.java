@@ -1,68 +1,45 @@
 package cavbotics.ntclient.api.stringsendable;
 
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import cavbotics.ntclient.Constants;
+import cavbotics.ntclient.api.SendableObject;
 import edu.wpi.first.networktables.NetworkTableEntry;
 
 /**
  * Object containing the key and value as a String to be used in
  * /string routes
  */
-public class StringSendable {
-    @NotNull(message = "a key is required")
-    @NotEmpty(message = "a key is required")
-    private String key;
-
-    @NotEmpty(message = "a value is required")
-    @NotNull(message = "a value is required")
-    private String value;
-
+public class StringSendable extends SendableObject<String> {
     /**
      * A StringSendable object with a key and value
      * 
      * @param key   The key to store in the network table
      * @param value The value for the given key
      */
-    public StringSendable(String key, String value) {
-        this.key = key;
-        this.value = value;
+    @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+    public StringSendable(@JsonProperty("key") String key, @JsonProperty("value") String value) {
+        super(key, value, "string");
     }
 
-    /**
-     * A StringSendable object with a key. Value is set to "" by default.
-     * 
-     * @param key
-     */
-    public StringSendable(String key) {
-        this.key = key;
-        this.value = "";
-    }
 
-    /**
-     * Get the key
-     * 
-     * @return Current key as String
-     */
-    public String getKey() {
-        return this.key;
-    }
-
-    /**
-     * Get the value
-     * 
-     * @return Current value as String
-     */
-    public String getValue() {
-        return this.value;
-    }
+    // /**
+    //  * A StringSendable object with a key. Value is set to "" by default.
+    //  * 
+    //  * @param key
+    //  */
+    // public StringSendable(String key) {
+    //     super(key, "");
+    // }
 
     /**
      * Get the value in the Network Table using this key
      * 
      * @return Value as a String in the Network Table
      */
+    @JsonIgnore
     public String getString() {
         NetworkTableEntry entry = Constants.table.getEntry(key);
         return entry.getString("none");
@@ -74,20 +51,7 @@ public class StringSendable {
      * @return True if successful and false if unsuccessful
      */
     public boolean setString() {
-        NetworkTableEntry entry = Constants.table.getEntry(this.key);
-        return entry.setString(value);
-    }
-
-    /**
-     * Deletes an entry from the Network Table using this key
-     * 
-     * @return True if successfully deleted and false if unsuccessful
-     */
-    public boolean removeString() {
         NetworkTableEntry entry = Constants.table.getEntry(key);
-        entry.delete();
-        // TODO: Add way to check if it was successful/unsuccesful
-        // and update the return value accordingly
-        return true;
+        return entry.setString(value);
     }
 }

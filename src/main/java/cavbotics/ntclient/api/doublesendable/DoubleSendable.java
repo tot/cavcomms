@@ -1,69 +1,34 @@
 package cavbotics.ntclient.api.doublesendable;
 
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
+import cavbotics.ntclient.api.SendableObject;
+
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import cavbotics.ntclient.Constants;
-
 import edu.wpi.first.networktables.NetworkTableEntry;
 
 /**
  * Object containing the key and value as a double to be used in
  * /double routes
  */
-public class DoubleSendable {
-	@NotNull(message = "a key is required")
-	@NotEmpty(message = "a key is required")
-	private String key;
+public class DoubleSendable extends SendableObject<Double> {
 
-	@NotEmpty(message = "a value is required")
-	@NotNull(message = "a value is required")
-	private double value;
-
-	/**
-	 * A DoubleSendable object with a key and value
-	 * 
-	 * @param key   The key to store in the network table
-	 * @param value The value for the given key
-	 */
-	public DoubleSendable(String key, double value) {
-		this.key = key;
-		this.value = value;
+	@JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+	public DoubleSendable(@JsonProperty("key") String key, @JsonProperty("value") double value) {
+		super(key, value, "double");
 	}
 
-	/**
-	 * A DoubleSendable object with a key. Value is set to 0.0 by default.
-	 * 
-	 * @param key
-	 */
-	public DoubleSendable(String key) {
-		this.key = key;
-		this.value = 0.0;
-	}
 
-	/**
-	 * Get the key
-	 * 
-	 * @return Current key as String
-	 */
-	public String getKey() {
-		return this.key;
-	}
 
-	/**
-	 * Get the value
-	 * 
-	 * @return Current value as double
-	 */
-	public double getValue() {
-		return this.value;
-	}
 
 	/**
 	 * Get the value in the Network Table using this key
 	 * 
 	 * @return Value as a double in the Network Table
 	 */
+	@JsonIgnore
 	public double getDouble() {
 		NetworkTableEntry entry = Constants.table.getEntry(key);
 		return entry.getDouble(-1);
@@ -75,20 +40,7 @@ public class DoubleSendable {
 	 * @return True if successful and false if unsuccessful
 	 */
 	public boolean setDouble() {
-		NetworkTableEntry entry = Constants.table.getEntry(this.key);
-		return entry.setNumber(value);
-	}
-
-	/**
-	 * Deletes an entry from the Network Table using this key
-	 * 
-	 * @return True if successfully deleted and false if unsuccessful
-	 */
-	public boolean removeDouble() {
 		NetworkTableEntry entry = Constants.table.getEntry(key);
-		entry.delete();
-		// TODO: Add way to check if it was successful/unsuccesful
-		// and update the return value accordingly
-		return true;
+		return entry.setNumber(value);
 	}
 }

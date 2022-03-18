@@ -1,89 +1,38 @@
 package cavbotics.ntclient.api.doublesendable;
 
+import java.util.List;
+
+import cavbotics.ntclient.api.ResponseSendable;
+
 /**
  * Response object for /double routes
  */
-public class DoubleResponse {
-    private String title;
-    private String message;
-    private double value;
-    private boolean status;
-
+public class DoubleResponse extends ResponseSendable<Object> {
     /**
-     * A DoubleResponse object with a decimal
+     * A DoubleResponse object with a decimal, Used in /get endpoint.
      * 
      * @param value Value as a double to send in response
      */
     public DoubleResponse(double value) {
-        this.title = "double";
-        this.value = value;
+        super("double", value);
     }
 
     /**
-     * A DoubleResponse object with a boolean
+     * A DoubleResponse object with a decimal, Used in /get endpoint.
      * 
-     * @param status Status as a boolean to send in response
+     * @param value Value as a double to send in response
      */
-    public DoubleResponse(boolean status) {
-        this.title = "status";
-        this.status = status;
+    public DoubleResponse(List<DoubleSendable> value) {
+        super("list of doubles", value);
     }
 
     /**
-     * A DoubleResponse object with a title and message
-     * 
-     * @param title   Title of the response
-     * @param message Message to send in response
-     */
-    public DoubleResponse(String title, String message) {
-        this.title = title;
-        this.message = message;
-    }
-
-    /**
-     * A DoubleResponse object with a title and status
+     * A DoubleResponse object with a title and status Used in /set endpoint.
      * 
      * @param title  Title of the response
      * @param status Status to send in response
      */
-    public DoubleResponse(String title, boolean status) {
-        this.title = title;
-        this.status = status;
-    }
-
-    /**
-     * Return the title
-     * 
-     * @return Title as a String
-     */
-    public String getTitle() {
-        return title;
-    }
-
-    /**
-     * Return the message
-     * 
-     * @return Message as a string
-     */
-    public String message() {
-        return message;
-    }
-
-    /**
-     * Return the status
-     * 
-     * @return Status as a boolean
-     */
-    public boolean getStatus() {
-        return status;
-    }
-
-    /**
-     * Return the value
-     * 
-     * @return Value as a double
-     */
-    public double getValue() {
-        return value;
+    public DoubleResponse(String title, double value, boolean status) {
+        super(title, value, status);
     }
 }
