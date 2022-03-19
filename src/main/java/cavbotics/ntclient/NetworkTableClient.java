@@ -20,6 +20,8 @@ public class NetworkTableClient {
 			public void addCorsMappings(CorsRegistry registry) {
 				registry.addMapping("/double/set").allowedOrigins("http://localhost:1212");
                 registry.addMapping("/string/set").allowedOrigins("http://localhost:1212");
+                registry.addMapping("/boolean/set").allowedOrigins("http://localhost:1212");
+
 			}
 		};
 	}
@@ -44,7 +46,8 @@ public class NetworkTableClient {
      */
     public static void connect(int team) {
         Constants.inst = NetworkTableInstance.getDefault();
-        Constants.inst.startClient("127.0.0.1");
+        // Constants.inst.startClient("127.0.0.1");
+        Constants.inst.startClientTeam(8590);
         Constants.table = Constants.inst.getTable("/datatable");
         //Constants.inst.startDSClient(); // recommended if running on DS computer; this gets the robot IP from the DS
     }
