@@ -36,7 +36,7 @@ public class StringController {
     public ResponseEntity<Object> getIntController(
             @RequestParam(value = "key", defaultValue = "") String key) {
         if (key == "" || key.length() == 0) {
-            NetworkTableEntry[] entries = Constants.inst.getEntries("/datatable", 4);
+            NetworkTableEntry[] entries = Constants.inst.getEntries("/datatable", 5);
             List<StringSendable> list = new ArrayList<StringSendable>();
             for (NetworkTableEntry entry : entries) {
                 list.add(new StringSendable(entry.getName().substring(11), entry.getString("")));
