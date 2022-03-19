@@ -2,6 +2,9 @@ package cavbotics.ntclient;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import edu.wpi.first.networktables.NetworkTableInstance;
 
@@ -9,6 +12,17 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 public class NetworkTableClient {
     // Team number
     private static int team;
+
+    @Bean
+	public WebMvcConfigurer corsConfigurer() {
+		return new WebMvcConfigurer() {
+			@Override
+			public void addCorsMappings(CorsRegistry registry) {
+				registry.addMapping("/double/set").allowedOrigins("http://localhost:1212");
+                registry.addMapping("/string/set").allowedOrigins("http://localhost:1212");
+			}
+		};
+	}
 
     public static void main(String[] args) {
         // Handles team number argument

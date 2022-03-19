@@ -7,7 +7,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import cavbotics.ntclient.Constants;
 import cavbotics.ntclient.api.SendableObject;
 import edu.wpi.first.networktables.NetworkTableEntry;
-import edu.wpi.first.networktables.NetworkTableType;
 
 /**
  * Object containing the key and value as a int to be used in

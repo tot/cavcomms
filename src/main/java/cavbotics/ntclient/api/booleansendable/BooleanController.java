@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import cavbotics.ntclient.Constants;
 import cavbotics.ntclient.api.ResponseHandler;
-import edu.wpi.first.networktables.EntryInfo;
 import edu.wpi.first.networktables.NetworkTableEntry;
 
 /**

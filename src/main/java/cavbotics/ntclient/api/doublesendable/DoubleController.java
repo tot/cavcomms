@@ -66,6 +66,8 @@ public class DoubleController {
 			MediaType.APPLICATION_JSON_VALUE })
 	@ResponseBody
 	public ResponseEntity<Object> setDoubleController(@RequestBody DoubleSendable num) {
+		System.out.println(num.getValue());
+		System.out.println(num.getKey());
 		boolean status = num.setDouble();
 		DoubleResponse res = new DoubleResponse("set", num.getValue(), status);
 		if (!status)
