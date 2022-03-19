@@ -1,4 +1,4 @@
-package cavbotics.ntclient.api.doublesendable;
+package cavbotics.ntclient.api.booleansendable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,35 +19,34 @@ import cavbotics.ntclient.api.ResponseHandler;
 import edu.wpi.first.networktables.NetworkTableEntry;
 
 /**
- * This file handles the Double routes
+ * This file handles the Int routes
  */
 @RestController
-@RequestMapping("/double")
-public class DoubleController {
+@RequestMapping("/boolean")
+public class BooleanController {
 
 	/**
-	 * Returns the double the key maps to. If the key does not exist or is of
-	 * different type, it will return -1. If there is no key, then return a list of
-	 * all the double keys.
+	 * Returns the int the key maps to. If the key does not exist or is of
+	 * different type, it will return -1.
 	 * 
 	 * @param key The key to look up
 	 * @return The value associated with the given key or the given default value if
 	 *         there is no value associated with the key
 	 */
 	@GetMapping(value = "/get", produces = "application/json")
-	public ResponseEntity<Object> getDoubleController(
+	public ResponseEntity<Object> getBooleanController(
 			@RequestParam(value = "key", defaultValue = "") String key) {
 		if (key == "" || key.length() == 0) {
-			NetworkTableEntry[] entries = Constants.inst.getEntries("/datatable", 2);
-			List<DoubleSendable> list = new ArrayList<DoubleSendable>();
+			NetworkTableEntry[] entries = Constants.inst.getEntries("/datatable", 1);
+			List<BooleanSendable> list = new ArrayList<BooleanSendable>();
 			for (NetworkTableEntry entry : entries) {
-				list.add(new DoubleSendable(entry.getName().substring(11), entry.getDouble(0)));
+				list.add(new BooleanSendable(entry.getName().substring(11), entry.getBoolean(false)));
 			}
-			return ResponseHandler.generateResponse("Searched all doubles in table", HttpStatus.OK, list);
+			return ResponseHandler.generateResponse("Searched all booleans in table", HttpStatus.OK, list);
 		} else {
-			DoubleSendable find = new DoubleSendable(key, 0.0);
-			DoubleResponse res = new DoubleResponse(find.getDouble());
-			if ((int) find.getDouble() == -1) {
+			BooleanSendable find = new BooleanSendable(key, false);
+			BooleanResponse res = new BooleanResponse(find.getBoolean());
+			if (find.getBoolean() == false) {
 				return ResponseHandler.generateResponse("Unable to find", HttpStatus.NOT_FOUND, res);
 			}
 			return ResponseHandler.generateResponse("Successfully searched", HttpStatus.OK, res);
@@ -55,7 +54,7 @@ public class DoubleController {
 	}
 
 	/**
-	 * Updates a double in the table. Adds a new double if the key does not exist.
+	 * Updates an int in the table. Adds a new int if the key does not exist.
 	 * 
 	 * @param key The key to be assigned to
 	 * @param num The value that will be assigned
@@ -65,11 +64,9 @@ public class DoubleController {
 	@PostMapping(value = "/set", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
 			MediaType.APPLICATION_JSON_VALUE })
 	@ResponseBody
-	public ResponseEntity<Object> setDoubleController(@RequestBody DoubleSendable num) {
-		System.out.println(num.getValue());
-		System.out.println(num.getKey());
-		boolean status = num.setDouble();
-		DoubleResponse res = new DoubleResponse("set", num.getValue(), status);
+	public ResponseEntity<Object> setBooleanController(@RequestBody BooleanSendable num) {
+		boolean status = num.setBoolean();
+		BooleanResponse res = new BooleanResponse("set", num.getBoolean(), status);
 		if (!status)
 			return ResponseHandler.generateResponse("Unable to set", HttpStatus.CONFLICT, res);
 		return ResponseHandler.generateResponse("Successfully set", HttpStatus.OK, res);
