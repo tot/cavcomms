@@ -40,15 +40,12 @@ public class KillSwitch {
 	 * @return True if successful and false if unsuccessful
 	 */
 	public boolean setStatus() {
-		Constants.table = Constants.inst.getTable("/datatable");
 		boolean updated = false;
 		if (status) {
 			updated = Constants.table.getEntry("Killswitch").setBoolean(false);
-			Constants.table = Constants.inst.getTable("/datatable");
 			return updated;
 		}
 		updated = Constants.table.getEntry("Killswitch").setBoolean(true);
-		Constants.table = Constants.inst.getTable("/datatable");
 		return updated;
 	}
 }
