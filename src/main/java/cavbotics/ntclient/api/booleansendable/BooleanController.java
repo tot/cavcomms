@@ -40,7 +40,7 @@ public class BooleanController {
 			NetworkTableEntry[] entries = Constants.inst.getEntries("/datatable", 1);
 			List<BooleanSendable> list = new ArrayList<BooleanSendable>();
 			for (NetworkTableEntry entry : entries) {
-				list.add(new BooleanSendable(entry.getName().substring(11), entry.getBoolean(false)));
+				list.add(new BooleanSendable(entry.getName().substring(11), entry.getBoolean(false), "boolean"));
 			}
 			return ResponseHandler.generateResponse("Searched all booleans in table", HttpStatus.OK, list);
 		} else {

@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import cavbotics.ntclient.Constants;
 import cavbotics.ntclient.api.ResponseHandler;
+import cavbotics.ntclient.api.booleansendable.BooleanResponse;
+import cavbotics.ntclient.api.booleansendable.BooleanSendable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 
 /**
@@ -37,15 +39,18 @@ public class LimelightController {
 	 */
 	@GetMapping(value = "/getled", produces = "application/json")
 	public ResponseEntity<Object> getLedController() {
-		Map<String, Boolean> map = new HashMap<String, Boolean>();
 		LimelightStatus limelight = new LimelightStatus();
 		boolean led = limelight.getLedStatus();
-		map.put("led", led);
+		BooleanSendable res = new BooleanSendable("led", led, "led status");
+		// Map<String, Boolean> map = new HashMap<String, Boolean>();
+		// LimelightStatus limelight = new LimelightStatus();
+		// boolean led = limelight.getLedStatus();
+		// map.put("led", led);
 		// if (!led) {
 		// return ResponseHandler.generateResponse("Unable to retrieve status",
 		// HttpStatus.NOT_FOUND, map);
 		// }
-		return ResponseHandler.generateResponse("Successfully searched", HttpStatus.OK, map);
+		return ResponseHandler.generateResponse("Successfully searched", HttpStatus.OK, res);
 	}
 
 	@GetMapping(value = "/gettarget", produces = "application/json")
@@ -53,12 +58,12 @@ public class LimelightController {
 		Map<String, Boolean> map = new HashMap<String, Boolean>();
 		LimelightStatus limelight = new LimelightStatus();
 		boolean target = limelight.getLedStatus();
-		map.put("target", target);
+		BooleanSendable res = new BooleanSendable("target", target, "target status");
 		// if (!target) {
 		// return ResponseHandler.generateResponse("Unable to retrieve target
 		// information", HttpStatus.NOT_FOUND, map);
 		// }
-		return ResponseHandler.generateResponse("Successfully searched", HttpStatus.OK, map);
+		return ResponseHandler.generateResponse("Successfully searched for target", HttpStatus.OK, res);
 	}
 
 	/**
