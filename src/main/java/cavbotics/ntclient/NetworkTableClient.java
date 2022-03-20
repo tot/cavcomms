@@ -47,8 +47,8 @@ public class NetworkTableClient {
      */
     public static void connect(int team) {
         Constants.inst = NetworkTableInstance.getDefault();
-        // Constants.inst.startClient("127.0.0.1");
-        Constants.inst.startClientTeam(8590);
+        Constants.inst.startClient("127.0.0.1");
+        // Constants.inst.startClientTeam(8590);
         Constants.table = Constants.inst.getTable("/datatable");
         //Constants.inst.startDSClient(); // recommended if running on DS computer; this gets the robot IP from the DS
     }
