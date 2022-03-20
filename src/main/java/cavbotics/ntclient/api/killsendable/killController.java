@@ -24,7 +24,7 @@ import edu.wpi.first.networktables.NetworkTableEntry;
  * This file handles the kill routes
  */
 @RestController
-@RequestMapping("/killSwitch")
+@RequestMapping("/killswitch")
 public class killController {
 
 	/**
