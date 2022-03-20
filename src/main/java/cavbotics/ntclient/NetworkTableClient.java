@@ -21,6 +21,7 @@ public class NetworkTableClient {
 				registry.addMapping("/double/set").allowedOrigins("http://localhost:1212");
                 registry.addMapping("/string/set").allowedOrigins("http://localhost:1212");
                 registry.addMapping("/boolean/set").allowedOrigins("http://localhost:1212");
+                registry.addMapping("/getall").allowedOrigins("http://localhost:1212");
 
 			}
 		};
