@@ -69,7 +69,7 @@ public class LimelightController {
 	 * @return False if the table key already exists with a different type.
 	 *         Otherwise True.
 	 */
-	@PostMapping(value = "/setstatua", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
+	@PostMapping(value = "/setstatus", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
 			MediaType.APPLICATION_JSON_VALUE })
 	@ResponseBody
 	public ResponseEntity<Object> setLimelightStatusController(@RequestBody LimelightStatus limelightstatus) {
