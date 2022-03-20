@@ -63,5 +63,13 @@ public class MainController {
 		map.put("ShooterMode", NetworkTableInstance.getDefault().getTable("/datatable").getEntry("shooterMode").getDouble(0));
 		return ResponseHandler.generateResponse("Searched all values in table", HttpStatus.OK, map);
 	}
+	@DeleteMapping(value = "/getConnection")
+	public ResponseEntity<Object> getConnection(){
+		Map<String, Boolean> map = new HashMap<String, Boolean>();
+		map.put("Connected", true);
 
+	
+		return ResponseHandler.generateResponse("Searched all values in table", HttpStatus.OK, map);
+
+	}
 }
