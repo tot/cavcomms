@@ -25,6 +25,10 @@ public class BooleanSendable extends SendableObject<Boolean> {
         super(key, value, "boolean");
     }
 
+    public BooleanSendable(@JsonProperty("key") String key, @JsonProperty("value") Boolean value, String name ) {
+        super(key, value, name);
+    }
+
 
 
 
