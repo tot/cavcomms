@@ -8,12 +8,15 @@ public abstract class SendableObject<T> {
 	protected String type;
 	protected NetworkTableType wasd;
 
+	/**
+	 * Default no-arg constructor
+	 */
 	public SendableObject() {
 		super();
 	}
 
 	/**
-	 * A DoubleSendable object with a key and value
+	 * A SendableObject with a key and value
 	 * 
 	 * @param key   The key to store in the network table
 	 * @param value The value for the given key
@@ -24,6 +27,13 @@ public abstract class SendableObject<T> {
 		this.type = "";
 	}
 
+	/**
+	 * A SendableObject with a key, value, and type
+	 * 
+	 * @param key
+	 * @param value
+	 * @param type
+	 */
 	public SendableObject(String key, T value, String type) {
 		this.key = key;
 		this.value = value;

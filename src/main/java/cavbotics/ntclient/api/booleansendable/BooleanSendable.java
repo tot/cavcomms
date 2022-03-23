@@ -9,8 +9,7 @@ import cavbotics.ntclient.api.SendableObject;
 import edu.wpi.first.networktables.NetworkTableEntry;
 
 /**
- * Object containing the key and value as a int to be used in
- * /int routes
+ * Boolean objects to be used in /boolean routes
  */
 public class BooleanSendable extends SendableObject<Boolean> {
 

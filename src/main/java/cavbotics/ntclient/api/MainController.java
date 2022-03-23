@@ -37,39 +37,45 @@ public class MainController {
 		return ResponseHandler.generateResponse("Deleted", HttpStatus.OK, res);
 	}
 
-	@GetMapping(value = "/getall")
-	public ResponseEntity<Object> getAllEntries(){
+	/**
+	 * Get the current state of all commands
+	 * 
+	 * @return An object containing all commands
+	 */
+	@GetMapping(value = "/getstatuses")
+	public ResponseEntity<Object> getStatuses(){
         Map<String, Object> map = new HashMap<String, Object>();
-		// map.put("DeclineHoodCommand", true);
-		map.put("DeclineHoodC33ommand", false);
-		map.put("DeclineHoodCommand", NetworkTableInstance.getDefault().getTable("/datatable").getEntry("DeclineHoodCommand").getBoolean(false));
-		// map.put("DoNothingCommand", NetworkTableInstance.getDefault().getTable("/datatable").getEntry("DoNothingCommand").getBoolean(false));
-		map.put("ExtendClimberCommand", NetworkTableInstance.getDefault().getTable("/datatable").getEntry("ExtendClimberCommand").getBoolean(false));
+		map.put("DeclineHoodCommand", NetworkTableInstance.getDefault().getTable(Constants.networkTable).getEntry("DeclineHoodCommand").getBoolean(false));
+		map.put("DoNothingCommand", NetworkTableInstance.getDefault().getTable(Constants.networkTable).getEntry("DoNothingCommand").getBoolean(false));
+		map.put("ExtendClimberCommand", NetworkTableInstance.getDefault().getTable(Constants.networkTable).getEntry("ExtendClimberCommand").getBoolean(false));
 		map.put("ledMode", NetworkTableInstance.getDefault().getTable("/limelight-sam").getEntry("ledMode").getDouble(0));
-		map.put("HoodCommand", NetworkTableInstance.getDefault().getTable("/datatable").getEntry("HoodCommand").getBoolean(false));
-		map.put("InnerIndexCommand",NetworkTableInstance.getDefault().getTable("/datatable").getEntry("InnerIndexCommand").getBoolean(false));
-		map.put("IntakeCommand",NetworkTableInstance.getDefault().getTable("/datatable").getEntry("IntakeCommand").getBoolean(false));
-		map.put("KickOutBallsCommand", NetworkTableInstance.getDefault().getTable("/datatable").getEntry("KickOutBallsCommand").getBoolean(false));
-		map.put("OneBallAuto", NetworkTableInstance.getDefault().getTable("/datatable").getEntry("OneBallAuto").getBoolean(false));
-		map.put("OuterIndexCommand",NetworkTableInstance.getDefault().getTable("/datatable").getEntry("OuterIndexCommand").getBoolean(false));
-		map.put("RaiseHoodCommand",NetworkTableInstance.getDefault().getTable("/datatable").getEntry("RaiseHoodCommand").getBoolean(false));
-		map.put("RetractClimberCode",NetworkTableInstance.getDefault().getTable("/datatable").getEntry("RetractClimberCode").getBoolean(false));
-		map.put("ShootCommand", NetworkTableInstance.getDefault().getTable("/datatable").getEntry("ShootCommand").getBoolean(false));
-		map.put("SwerveCommand", NetworkTableInstance.getDefault().getTable("/datatable").getEntry("SwerveCommand").getBoolean(false));
-		map.put("Routine", NetworkTableInstance.getDefault().getTable("/datatable").getEntry("routine").getDouble(0));
-		map.put("P", NetworkTableInstance.getDefault().getTable("/datatable").getEntry("P").getDouble(0));
-		map.put("I", NetworkTableInstance.getDefault().getTable("/datatable").getEntry("I").getDouble(0));
-		map.put("D", NetworkTableInstance.getDefault().getTable("/datatable").getEntry("D").getDouble(0));
-		map.put("ShooterMode", NetworkTableInstance.getDefault().getTable("/datatable").getEntry("shooterMode").getDouble(0));
+		map.put("HoodCommand", NetworkTableInstance.getDefault().getTable(Constants.networkTable).getEntry("HoodCommand").getBoolean(false));
+		map.put("InnerIndexCommand",NetworkTableInstance.getDefault().getTable(Constants.networkTable).getEntry("InnerIndexCommand").getBoolean(false));
+		map.put("IntakeCommand",NetworkTableInstance.getDefault().getTable(Constants.networkTable).getEntry("IntakeCommand").getBoolean(false));
+		map.put("KickOutBallsCommand", NetworkTableInstance.getDefault().getTable(Constants.networkTable).getEntry("KickOutBallsCommand").getBoolean(false));
+		map.put("OneBallAuto", NetworkTableInstance.getDefault().getTable(Constants.networkTable).getEntry("OneBallAuto").getBoolean(false));
+		map.put("OuterIndexCommand",NetworkTableInstance.getDefault().getTable(Constants.networkTable).getEntry("OuterIndexCommand").getBoolean(false));
+		map.put("RaiseHoodCommand",NetworkTableInstance.getDefault().getTable(Constants.networkTable).getEntry("RaiseHoodCommand").getBoolean(false));
+		map.put("RetractClimberCode",NetworkTableInstance.getDefault().getTable(Constants.networkTable).getEntry("RetractClimberCode").getBoolean(false));
+		map.put("ShootCommand", NetworkTableInstance.getDefault().getTable(Constants.networkTable).getEntry("ShootCommand").getBoolean(false));
+		map.put("SwerveCommand", NetworkTableInstance.getDefault().getTable(Constants.networkTable).getEntry("SwerveCommand").getBoolean(false));
+		map.put("Routine", NetworkTableInstance.getDefault().getTable(Constants.networkTable).getEntry("routine").getDouble(0));
+		map.put("P", NetworkTableInstance.getDefault().getTable(Constants.networkTable).getEntry("P").getDouble(0));
+		map.put("I", NetworkTableInstance.getDefault().getTable(Constants.networkTable).getEntry("I").getDouble(0));
+		map.put("D", NetworkTableInstance.getDefault().getTable(Constants.networkTable).getEntry("D").getDouble(0));
+		map.put("ShooterMode", NetworkTableInstance.getDefault().getTable(Constants.networkTable).getEntry("shooterMode").getDouble(0));
 		return ResponseHandler.generateResponse("Searched all values in table", HttpStatus.OK, map);
 	}
-	@DeleteMapping(value = "/getconnection")
+
+	/**
+	 * Checks if client can connect to API
+	 * 
+	 * @return true
+	 */
+	@GetMapping(value = "/getconnection")
 	public ResponseEntity<Object> getConnection(){
 		Map<String, Boolean> map = new HashMap<String, Boolean>();
 		map.put("Connected", true);
-
-	
 		return ResponseHandler.generateResponse("Searched all values in table", HttpStatus.OK, map);
-
 	}
 }

@@ -30,7 +30,7 @@ public class KillSwitch {
 	public boolean getStatus() {
 		NetworkTableEntry entry = Constants.table.getEntry("Killswitch");
 		boolean switchStatus = entry.getBoolean(false);
-		Constants.table = Constants.inst.getTable("/datatable");
+		Constants.table = Constants.inst.getTable(Constants.networkTable);
 		return switchStatus;
 	}
 

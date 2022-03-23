@@ -38,10 +38,10 @@ public class DoubleController {
 	public ResponseEntity<Object> getDoubleController(
 			@RequestParam(value = "key", defaultValue = "") String key) {
 		if (key == "" || key.length() == 0) {
-			NetworkTableEntry[] entries = Constants.inst.getEntries("/datatable", 2);
+			NetworkTableEntry[] entries = Constants.inst.getEntries(Constants.networkTable, 2);
 			List<DoubleSendable> list = new ArrayList<DoubleSendable>();
 			for (NetworkTableEntry entry : entries) {
-				list.add(new DoubleSendable(entry.getName().substring(11), entry.getDouble(0)));
+				list.add(new DoubleSendable(entry.getName().substring(Constants.networkTable.length()), entry.getDouble(0)));
 			}
 			return ResponseHandler.generateResponse("Searched all doubles in table", HttpStatus.OK, list);
 		} else {

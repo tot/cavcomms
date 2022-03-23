@@ -9,8 +9,7 @@ import cavbotics.ntclient.api.SendableObject;
 import edu.wpi.first.networktables.NetworkTableEntry;
 
 /**
- * Object containing the key and value as a int to be used in
- * /int routes
+ * Int objects to be used in /int routes
  */
 public class IntSendable extends SendableObject<Integer> {
 

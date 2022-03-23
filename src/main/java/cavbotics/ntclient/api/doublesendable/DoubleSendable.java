@@ -10,8 +10,7 @@ import cavbotics.ntclient.Constants;
 import edu.wpi.first.networktables.NetworkTableEntry;
 
 /**
- * Object containing the key and value as a double to be used in
- * /double routes
+ * Double objects to be used in /double routes
  */
 public class DoubleSendable extends SendableObject<Double> {
 

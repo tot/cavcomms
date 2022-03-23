@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -55,7 +54,7 @@ public class killController {
 	@PostMapping(value = "/set", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
 			MediaType.APPLICATION_JSON_VALUE })
 	@ResponseBody
-	public ResponseEntity<Object> setLimelightStatusController(@RequestBody KillSwitch killStatus) {
+	public ResponseEntity<Object> setKillswitchController(@RequestBody KillSwitch killStatus) {
 		Map<String, Boolean> map = new HashMap<String, Boolean>();
 		KillSwitch killSwitch = new KillSwitch();
 		boolean status = killSwitch.getStatus();

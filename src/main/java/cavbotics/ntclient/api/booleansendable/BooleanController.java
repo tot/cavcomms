@@ -19,7 +19,7 @@ import cavbotics.ntclient.api.ResponseHandler;
 import edu.wpi.first.networktables.NetworkTableEntry;
 
 /**
- * This file handles the Int routes
+ * This file handles the Boolean routes
  */
 @RestController
 @RequestMapping("/boolean")
@@ -37,10 +37,10 @@ public class BooleanController {
 	public ResponseEntity<Object> getBooleanController(
 			@RequestParam(value = "key", defaultValue = "") String key) {
 		if (key == "" || key.length() == 0) {
-			NetworkTableEntry[] entries = Constants.inst.getEntries("/datatable", 1);
+			NetworkTableEntry[] entries = Constants.inst.getEntries(Constants.networkTable, 1);
 			List<BooleanSendable> list = new ArrayList<BooleanSendable>();
 			for (NetworkTableEntry entry : entries) {
-				list.add(new BooleanSendable(entry.getName().substring(11), entry.getBoolean(false), "boolean"));
+				list.add(new BooleanSendable(entry.getName().substring(Constants.networkTable.length()), entry.getBoolean(false), "boolean"));
 			}
 			return ResponseHandler.generateResponse("Searched all booleans in table", HttpStatus.OK, list);
 		} else {

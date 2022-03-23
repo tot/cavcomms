@@ -33,15 +33,15 @@ public class StringController {
      *         there is no value associated with the key
      */
     @GetMapping(value = "/get", produces = "application/json")
-    public ResponseEntity<Object> getIntController(
+    public ResponseEntity<Object> getStringController(
             @RequestParam(value = "key", defaultValue = "") String key) {
         if (key == "" || key.length() == 0) {
-            NetworkTableEntry[] entries = Constants.inst.getEntries("/datatable", 5);
+            NetworkTableEntry[] entries = Constants.inst.getEntries(Constants.networkTable, 5);
             List<StringSendable> list = new ArrayList<StringSendable>();
             for (NetworkTableEntry entry : entries) {
-                list.add(new StringSendable(entry.getName().substring(11), entry.getString("")));
+                list.add(new StringSendable(entry.getName().substring(Constants.networkTable.length()), entry.getString("")));
             }
-            return ResponseHandler.generateResponse("Searched all doubles in table", HttpStatus.OK, list);
+            return ResponseHandler.generateResponse("Searched all Strings in table", HttpStatus.OK, list);
         } else {
             StringSendable find = new StringSendable(key, "");
             StringResponse res = new StringResponse(find.getString());

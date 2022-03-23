@@ -10,7 +10,7 @@ public class ResponseSendable<T> {
     protected boolean status;
 
     /**
-     * A ResponseSendable object with a generic type, Used in /get endpoint.
+     * A ResponseSendable object with a generic type. Used in /get endpoint.
      * 
      * @param value Value as a double to send in response
      */
@@ -56,7 +56,7 @@ public class ResponseSendable<T> {
      * 
      * @return Message as a string
      */
-    public String message() {
+    public String getMessage() {
         return message;
     }
 

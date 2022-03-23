@@ -9,8 +9,7 @@ import cavbotics.ntclient.api.SendableObject;
 import edu.wpi.first.networktables.NetworkTableEntry;
 
 /**
- * Object containing the key and value as a String to be used in
- * /string routes
+ * String objects to be used in /string routes
  */
 public class StringSendable extends SendableObject<String> {
     /**
@@ -23,16 +22,6 @@ public class StringSendable extends SendableObject<String> {
     public StringSendable(@JsonProperty("key") String key, @JsonProperty("value") String value) {
         super(key, value, "string");
     }
-
-
-    // /**
-    //  * A StringSendable object with a key. Value is set to "" by default.
-    //  * 
-    //  * @param key
-    //  */
-    // public StringSendable(String key) {
-    //     super(key, "");
-    // }
 
     /**
      * Get the value in the Network Table using this key
