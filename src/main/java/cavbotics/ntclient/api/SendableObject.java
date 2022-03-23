@@ -1,9 +1,12 @@
 package cavbotics.ntclient.api;
 
+import edu.wpi.first.networktables.NetworkTableType;
+
 public abstract class SendableObject<T> {
 	protected String key;
 	protected T value;
 	protected String type;
+	protected NetworkTableType wasd;
 
 	public SendableObject() {
 		super();
@@ -26,6 +29,8 @@ public abstract class SendableObject<T> {
 		this.value = value;
 		this.type = type;
 	}
+
+
 
 	/**
 	 * Get the key

@@ -1,5 +1,7 @@
 package cavbotics.ntclient.api;
 
+import edu.wpi.first.networktables.NetworkTableType;
+
 public class ResponseSendable<T> {
     protected String title;
     protected String message;

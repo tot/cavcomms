@@ -13,9 +13,9 @@ CavComms is a backend server written in Java using Spring Boot and WPILib. It is
 ### Features
 - Ready to use out-of-the-box
 - Easily customizable for any team
-- Organized API routes
+- Organized API endpoints
 - NetworkTables support
-- Support for multiple data types ([view full list here](https://google.com))
+- Support for multiple data types ([view full list here](https://github.com/tot/cavbotics-dashboard-backend/wiki/Endpoints))
 <p>more to come...</p>
 
 
