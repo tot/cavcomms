@@ -67,16 +67,4 @@ public class MainController {
 		map.put("ShooterMode", NetworkTableInstance.getDefault().getTable(Constants.networkTable).getEntry("shooterMode").getDouble(0));
 		return ResponseHandler.generateResponse("Searched all values in table", HttpStatus.OK, map);
 	}
-
-	/**
-	 * Checks if client can connect to API
-	 * 
-	 * @return true
-	 */
-	@GetMapping(value = "/getconnection")
-	public ResponseEntity<Object> getConnection(){
-		Map<String, Boolean> map = new HashMap<String, Boolean>();
-		map.put("Connected", true);
-		return ResponseHandler.generateResponse("Searched all values in table", HttpStatus.OK, map);
-	}
 }
