@@ -10,4 +10,6 @@ public class Constants {
     public static NetworkTableInstance inst;
     public static NetworkTable table;
     public static String networkTable = "/datatable";
+    public static String limelightTable = "/limelight-sam";
+
 }

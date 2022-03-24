@@ -45,10 +45,11 @@ public class MainController {
 	@GetMapping(value = "/getstatuses")
 	public ResponseEntity<Object> getStatuses(){
         Map<String, Object> map = new HashMap<String, Object>();
+		map.put("connection", NetworkTableInstance.getDefault().getTable(Constants.networkTable).getEntry("connection").getBoolean(true));
 		map.put("DeclineHoodCommand", NetworkTableInstance.getDefault().getTable(Constants.networkTable).getEntry("DeclineHoodCommand").getBoolean(false));
 		map.put("DoNothingCommand", NetworkTableInstance.getDefault().getTable(Constants.networkTable).getEntry("DoNothingCommand").getBoolean(false));
 		map.put("ExtendClimberCommand", NetworkTableInstance.getDefault().getTable(Constants.networkTable).getEntry("ExtendClimberCommand").getBoolean(false));
-		map.put("ledMode", NetworkTableInstance.getDefault().getTable("/limelight-sam").getEntry("ledMode").getDouble(0));
+		map.put("ledMode", NetworkTableInstance.getDefault().getTable(Constants.limelightTable).getEntry("ledMode").getDouble(0));
 		map.put("HoodCommand", NetworkTableInstance.getDefault().getTable(Constants.networkTable).getEntry("HoodCommand").getBoolean(false));
 		map.put("InnerIndexCommand",NetworkTableInstance.getDefault().getTable(Constants.networkTable).getEntry("InnerIndexCommand").getBoolean(false));
 		map.put("IntakeCommand",NetworkTableInstance.getDefault().getTable(Constants.networkTable).getEntry("IntakeCommand").getBoolean(false));
