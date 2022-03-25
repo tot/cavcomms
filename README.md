@@ -47,3 +47,4 @@ Changing the port: Edit the `server.port` value in `application.properties`
 ### Credits
 - [Cavbotics Team #8590](https://wtwcsr.org)
 - [Tony T.](https://github.com/tot)
+- [Joseph T.](https://github.com/jt914)
